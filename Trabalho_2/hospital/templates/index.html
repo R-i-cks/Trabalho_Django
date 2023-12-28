@@ -1,0 +1,10 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'hospital/style.css' %}">
+
+    <ul>
+        <li><a href="{% url 'hospital:utente'  %}">{{ "Utentes" }}</a></li>
+        <li><a href="{% url 'hospital:medico' %}">{{ "Medicos"}}</a></li>
+        <li><a href="{% url 'hospital:medicamento'  %}">{{"Medicamentos" }}</a></li>
+        <li><a href="{% url 'hospital:consulta' %}">{{ "Consulta" }}</a></li>
+    </ul>
