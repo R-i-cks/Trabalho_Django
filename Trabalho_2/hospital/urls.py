@@ -1,12 +1,17 @@
-from django.urls import path
+from django.urls import include, path
+from rest_framework import routers
 
 from . import views
 
-app_name = "hospital"
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
 urlpatterns = [
-    path("", views.IndexView.as_view(), name="index"),
-    path("<int:pk>/utente/", views.UtenteView.as_view(), name="utente"),
-    path("<int:pk>/medico/", views.MedicoView.as_view(), name="medico"),
-    path("<int:pk>/medicamento/", views.MedicamentoView.as_view(), name="medicamento"),
-    path("<int:pk>/consulta/", views.ConsultaView.as_view(), name="consulta"),
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
+
+urlpatterns += router.urls
