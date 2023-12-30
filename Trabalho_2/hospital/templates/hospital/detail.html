@@ -1,0 +1,8 @@
+{% if obj_consulta %}
+    <h1>Aqui temos uma lista dos atributos da consulta {{ obj_consulta.id }}</h1>
+    <ul>
+        <li>Consulta a: {{ obj_consulta.utente.nome }}, prestada pelo médico {{ obj_consulta.medico.nome }}</li>
+    </ul>
+{% else %}
+    <p>Não há dados a mostrar</p>
+{% endif %}

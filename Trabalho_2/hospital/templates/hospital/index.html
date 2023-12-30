@@ -1,0 +1,13 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'hospital/style.css' %}">
+{% if lista_consultas %}
+<h1>Aqui temos uma lista de ids de consultas</h1>
+    <ul>
+    {% for consulta in lista_consultas %}
+        <li> <a href="{% url 'hospital:detail' consulta.id %}" >Consulta: {{ consulta.id }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Não há consultas a mostrar</p>
+{% endif %}
