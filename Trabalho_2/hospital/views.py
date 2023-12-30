@@ -19,13 +19,15 @@ class DetailView(generic.DetailView):
 
 
 class UtenteView(generic.DetailView):
-    model = Utente
+    model = Consulta
     template_name = "hospital/utente.html"
-
+    context_object_name = "consulta_utente"
+    pk_url_kwarg = 'id'
 
 class MedicoView(generic.DetailView):
-    model = Medico
+    model = Consulta
     template_name = "hospital/medico.html"
-
+    context_object_name = "consulta_medico"
+    pk_url_kwarg = 'id'
 
 

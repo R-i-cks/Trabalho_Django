@@ -1,0 +1,10 @@
+{% if consulta_medico %}
+    <h1>Ficha de {{ consulta_medico.medico.nome }}</h1>
+    <ul>
+        <li>Consulta a:
+            <a href="{% url 'hospital:utente' consulta_medico.utente.id%}">
+                {{ consulta_medico.utente.nome }} </a></li>
+    </ul>
+{% else %}
+    <p>Não há dados a mostrar</p>
+{% endif %}
