@@ -1,16 +1,13 @@
 from django.db import models
-
 # Create your models here.
 
 class Utente(models.Model):
     nome = models.CharField(max_length=200, unique=True)
-
     def __str__(self):
         return self.nome
 
 class Medico(models.Model):
     nome = models.CharField(max_length=200, unique=True)
-
     def __str__(self):
         return self.nome
 class Medicamento(models.Model):
