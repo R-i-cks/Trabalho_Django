@@ -2,8 +2,13 @@
     <h1>Aqui temos uma lista dos atributos da consulta {{ obj_consulta.id }}</h1>
     <ul>
         <li>Consulta a: <a href="{% url 'hospital:utente' obj_consulta.utente.id%}">
-            {{ obj_consulta.utente.nome }}</a>,
-            prestada pelo médico: <a href="{% url 'hospital:medico' obj_consulta.medico.id%}"> {{ obj_consulta.medico.nome }}</a></li>
+            {{ obj_consulta.utente.nome }}</a></li>
+        <li>Prestada pelo médico: <a href="{% url 'hospital:medico' obj_consulta.medico.id%}"> {{ obj_consulta.medico.nome }}</a></li>
+        <li>    Prescrições:
+              {% for medicamento in obj_consulta.prescricoes.all %}
+                {{ medicamento.nome }} |
+              {% endfor %}
+        </li>
     </ul>
 {% else %}
     <p>Não há dados a mostrar</p>
