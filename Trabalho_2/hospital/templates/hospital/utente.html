@@ -1,7 +1,12 @@
 {% if consulta_utente %}
-    <h1>Ficha de utente {{ consulta_utente.utente.nome }}</h1>
+    <h1>Ficha de {{ consulta_utente.utente.nome }}</h1>
     <ul>
         <li>Consulta prestada pelo médico <a href="{% url 'hospital:medico' consulta_utente.medico.id%}"> {{ consulta_utente.medico.nome }}</a></li>
+        <li>    Prescrições:
+              {% for medicamento in consulta_utente.prescricoes.all %}
+                {{ medicamento.nome }} |
+              {% endfor %}
+        </li>
     </ul>
 {% else %}
     <p>Não há dados a mostrar</p>

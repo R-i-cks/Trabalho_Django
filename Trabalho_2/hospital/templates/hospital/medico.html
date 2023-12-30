@@ -4,6 +4,11 @@
         <li>Consulta a:
             <a href="{% url 'hospital:utente' consulta_medico.utente.id%}">
                 {{ consulta_medico.utente.nome }} </a></li>
+        <li>    Prescrições:
+              {% for medicamento in consulta_medico.prescricoes.all %}
+                {{ medicamento.nome }} |
+              {% endfor %}
+        </li>
     </ul>
 {% else %}
     <p>Não há dados a mostrar</p>
