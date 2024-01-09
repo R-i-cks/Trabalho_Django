@@ -1,0 +1,37 @@
+/* static/hospital/logout.css */
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Set the minimum height of the body to at least the height of the viewport */
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    color: #008080;
+}
+
+a {
+    color: #008080;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+p {
+    margin-top: 20px;
+}
+
+/* Added styles for the developer section */
+.developer-section {
+    margin-top: auto; /* Push the developer section to the bottom of the page */
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}

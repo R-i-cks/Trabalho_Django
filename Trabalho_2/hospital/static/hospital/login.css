@@ -1,7 +1,68 @@
-body{
-background-color: blanchedalmond;
-display:flex;
-flex-direction: column;
-align-items: center;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    background-color: #f0ece6; /* Light beige background color */
 }
 
+.container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background-color: #fffaf0; /* Ivory background for the login container */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Slight shadow for a card-like appearance */
+    width: 300px; /* Adjust the width of the container */
+    padding: 20px;
+    text-align: center;
+}
+
+h2 {
+    color: #e44d26; /* Warm orange color for the title */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    margin-bottom: 5px;
+    color: #555; /* Dark gray color for labels */
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners for input fields */
+}
+
+button {
+    padding: 10px;
+    background-color: #e44d26; /* Warm orange color for the button */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 5px; /* Rounded corners for the button */
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #d0411e; /* Darker orange on hover */
+}
+
+.developer-section {
+    text-align: center;
+    font-size: 14px;
+    color: #888; /* Gray color for the footnote text */
+    padding: 10px; /* Add some padding for better appearance */
+}
