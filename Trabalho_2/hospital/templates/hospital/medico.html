@@ -1,15 +1,41 @@
-{% if consulta_medico %}
-    <h1>Ficha de {{ consulta_medico.medico.nome }}</h1>
-    <ul>
-        <li>Consulta a:
-            <a href="{% url 'hospital:utente' consulta_medico.utente.id%}">
-                {{ consulta_medico.utente.nome }} </a></li>
-        <li>    Prescrições:
-              {% for medicamento in consulta_medico.prescricoes.all %}
-                {{ medicamento.nome }} |
-              {% endfor %}
-        </li>
-    </ul>
-{% else %}
-    <p>Não há dados a mostrar</p>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Médico</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hospital/medico.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="medical-record">
+            <h1>Ficha de {{ consultas_medico.first.medico.nome }}</h1>
+            <ul class="consultation-list">
+                {% for consulta in consultas_medico %}
+                    <li class="consultation-item">
+                        <p class="patient-info">Consulta a:
+                            <a href="{% url 'hospital:utente' consulta.utente.id %}">
+                                {{ consulta.utente.nome }} </a></p>
+                        <p class="prescription-heading">Prescrições:</p>
+                        <ul class="prescription-list">
+                            {% for medicamento in consulta.prescricoes.all %}
+                                <li>{{ medicamento.nome }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="actions">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        <div class="footnote">
+            <p>UC de Aplicações Distribuídas | by Ricardo, Monica & Dinis</p>
+        </div>
+    </div>
+</body>
+</html>

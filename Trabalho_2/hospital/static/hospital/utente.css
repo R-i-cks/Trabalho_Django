@@ -1,0 +1,90 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa; /* Cor de fundo da página */
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    background-color: #ffffff; /* Cor de fundo da área de conteúdo */
+    border-radius: 10px; /* Bordas curvas */
+    overflow: hidden; /* Para garantir que as bordas curvas sejam aplicadas corretamente */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para adicionar destaque */
+}
+
+.medical-record {
+    max-width: 600px;
+    margin-right: 20px;
+}
+
+h1 {
+    color: #333;
+}
+
+.consultation-list {
+    list-style: none;
+    padding: 0;
+}
+
+.consultation-item {
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 8px; /* Bordas curvas */
+}
+
+.doctor-info {
+    font-weight: bold;
+    color: #007BFF;
+}
+
+.prescription-heading {
+    font-weight: bold;
+    color: #28A745;
+    margin-top: 10px;
+}
+
+.prescription-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 5px;
+}
+
+.prescription-list li {
+    color: #6C757D;
+}
+
+.actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px; /* Increased border-radius for a more rounded button */
+    transition: background-color 0.3s ease; /* Efeito de transição para a cor de fundo */
+}
+
+button:hover {
+    background-color: #c82333; /* Cor alterada ao passar o mouse */
+}
+
+.footnote {
+    margin-top: auto; /* Push the footnote to the bottom */
+    padding: 10px; /* Adjust the padding */
+    background-color: #f0f0f0;
+    text-align: center;
+    border-radius: 0 0 8px 8px; /* Curva apenas a parte inferior da nota de rodapé */
+    font-size: 14px; /* Adjust the font size */
+    color: #888; /* Gray color for the text */
+}

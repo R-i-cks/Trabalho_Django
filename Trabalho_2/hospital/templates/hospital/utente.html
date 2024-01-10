@@ -1,13 +1,38 @@
-{% if consulta_utente %}
-    <h1>Ficha de {{ consulta_utente.utente.nome }}</h1>
-    <ul>
-        <li>Consulta prestada pelo médico <a href="{% url 'hospital:medico' consulta_utente.medico.id%}"> {{ consulta_utente.medico.nome }}</a></li>
-        <li>    Prescrições:
-              {% for medicamento in consulta_utente.prescricoes.all %}
-                {{ medicamento.nome }} |
-              {% endfor %}
-        </li>
-    </ul>
-{% else %}
-    <p>Não há dados a mostrar</p>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de utente</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hospital/utente.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="medical-record">
+            <h1>Ficha de {{ consultas_utente.first.utente.nome }}</h1>
+            <ul class="consultation-list">
+                {% for consulta in consultas_utente %}
+                    <li class="consultation-item">
+                        <p class="doctor-info">Consulta prestada por {{ consulta.medico.nome }}</p>
+                        <p class="prescription-heading">Prescrições:</p>
+                        <ul class="prescription-list">
+                            {% for medicamento in consulta.prescricoes.all %}
+                                <li>{{ medicamento.nome }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="actions">
+        <form method="post" action="{% url 'hospital:logout' %}">
+            {% csrf_token %}
+        <button type="submit" >Logout</button></form>
+        <div class="footnote">
+            <p>Developed by Ricardo, Monica & Dinis</p>
+        </div>
+    </div>
+</body>
+</html>
