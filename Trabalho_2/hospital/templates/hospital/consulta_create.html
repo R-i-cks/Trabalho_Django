@@ -1,0 +1,58 @@
+<!-- hospital/medico/consulta_create.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Consulta</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hospital/medico.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Create Consulta for Medico ID: {{ medico.id }}</h1>
+        <form method="post" action="{% url 'hospital:consulta_create' medico.id %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label {{ form.utente.id }}>Utente:</label>
+                {{ form.utente }}
+                {{ form.utente.errors }}
+            </div>
+
+            <div class="form-group">
+                <label {{ prescricoes_field }}>Prescricoes:</label>
+                {{ form.prescricoes }}
+                {{ form.prescricoes.errors }}
+            </div>
+
+            <div class="form-group">
+                <label {{ form.unidade_saude.id }}>Unidade de Saude:</label>
+                {{ form.unidade_saude }}
+                {{ form.unidade_saude.errors }}
+            </div>
+
+            <div class="form-group">
+                <label {{ form.data.id }}>Data:</label>
+                {{ form.data }}
+                {{ form.data.errors }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Create Consulta</button>
+        </form>
+
+        <a href="{% url 'hospital:medico_detail' medico.id %}" class="btn btn-secondary mt-2">Back to Medico Detail</a>
+    </div>
+
+    <div class="actions">
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        <div class="footnote">
+            <p>UC de Aplicações Distribuídas | by Ricardo, Monica & Dinis</p>
+        </div>
+    </div>
+</body>
+</html>

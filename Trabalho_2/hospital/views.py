@@ -4,6 +4,8 @@ from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from .models import Utente, Medico, Medicamento, Consulta
+from .forms import ConsultaForm  #adicionei este e o de baixo
+from django.http import Http404
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
@@ -87,3 +89,30 @@ class MedicoView(LoginRequiredMixin,generic.DetailView):
         context['consultas_medico'] = consultas_medico
         return context
 
+class ConsultaCreateView(LoginRequiredMixin,generic.DetailView):
+    template_name = 'hospital/consulta_create.html'
+
+    def get(self, request, medico_id):
+        medico = get_object_or_404(Medico, id=medico_id)
+        form = ConsultaForm()
+        return render(request, self.template_name, {'form': form, 'medico': medico})
+
+    def post(self, request, medico_id):
+        medico = get_object_or_404(Medico, id=medico_id)
+        form = ConsultaForm(request.POST)
+
+        # Additional validation
+        utente_id = request.POST.get('utente')
+        if not Utente.objects.filter(id=utente_id).exists():
+            raise Http404("Invalid Utente ID")
+
+        if form.is_valid():
+            # Associate Utente and Medico with Consulta
+            consulta = form.save(commit=False)
+            consulta.medico = medico
+            utente = get_object_or_404(Utente, id=utente_id)
+            consulta.utente = utente
+            consulta.save()
+            return redirect('MedicoView', id=medico_id)
+
+        return render(request, self.template_name, {'form': form, 'medico': medico})
