@@ -54,7 +54,6 @@ class Medicoes(models.Model):
     unidades = models.CharField(max_length=10, default="")
 
 class Prescricoes(models.Model):
-    enfermeiro = models.ForeignKey(Enfermeiro, on_delete=models.CASCADE, null=True)
 
     medicamento = models.ManyToManyField(Medicamento)
     utente = models.ForeignKey(Utente, on_delete=models.CASCADE)
@@ -65,7 +64,7 @@ class Prescricoes(models.Model):
 
 class Exame(models.Model):
     utente = models.ForeignKey(Utente, on_delete=models.CASCADE)
-    medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
+    medico = models.ForeignKey(Medico, on_delete=models.CASCADE, null=True)
     enfermeiro = models.ForeignKey(Enfermeiro, on_delete=models.CASCADE, null=True)
     data_realizacao = models.DateTimeField(null=True)
     nome_exame = models.CharField(max_length=40, default="")
