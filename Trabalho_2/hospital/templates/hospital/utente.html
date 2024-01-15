@@ -39,9 +39,13 @@
                         <p class="data-consulta">Data: {{ consulta.data }}</p>
                         <p class="prescription-heading">Prescrições:</p>
                             {% for prescricao in consulta.prescricoes.all %}
+                                {% for medicamento in prescricao.medicamento.all %}
                                 <ul class="prescription-list">
-                                    <li>{{ prescricao }}</li>
+                                    <li>Tomar {{ medicamento.nome }}, {{prescricao.dose_diaria}} vezes ao dia |</li>
+                                    <li>Início da toma a: {{prescricao.validade_prescricao}} |</li>
+                                    <li>Válida durante {{prescricao.validade_prescricao}} meses |</li>
                                 </ul>
+                                {% endfor %}
                             {% endfor %}
                         <p class="measurements-heading">Medições:</p>
                             {% for medicao in consulta.medicoes.all %}
@@ -52,9 +56,9 @@
                         <p class="exams-heading">Exames:</p>
                             {% for exame in consulta.exames.all %}
                                 <ul class="exams-list">
-                                    <li>{{ exame.nome_exame }}</li>
-                                    <li>Realizado a {{ exame.data_realizacao }}</li>
-                                    <li>Resultado: {{ exame.resultado }}</li>
+                                    <li>{{ exame.nome_exame }} |</li>
+                                    <li>Realizado a {{ exame.data_realizacao }} |</li>
+                                    <li>Resultado: {{ exame.resultado }} |</li>
                                 </ul>
                             {% endfor %}
 
@@ -62,9 +66,9 @@
                 {% endfor %}
             </ul>
         </div>
-    </div>
-        <div class="footnote">
+         <div class="footnote">
             <p>Developed by Ricardo, Monica & Dinis</p>
         </div>
+    </div>
 </body>
 </html>
