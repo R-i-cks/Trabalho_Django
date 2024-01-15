@@ -75,7 +75,7 @@ class UtenteView(LoginRequiredMixin,generic.DetailView):
 class MedicoView(LoginRequiredMixin,generic.DetailView):
     model = Consulta
     template_name = "hospital/medico.html"
-    context_object_name = "consulta_medico"
+    context_object_name = "consultas_medico"
     pk_url_kwarg = 'id'
 
     def get_object(self, queryset=None):
