@@ -39,6 +39,9 @@ def user_login(request):
             elif user_group.name == "Familiar":
                 familiar_id = Familiar.objects.get(nome=username).id
                 return redirect("hospital:familiar", id=familiar_id)
+            elif user_group.name == "Auxiliar":
+                auxiliar_id = Auxiliar.objects.get(nome=username).id
+                return redirect("hospital:auxiliar", id=auxiliar_id)
 
         else:
             messages.error(request, "Credenciais inválidas.")
@@ -56,11 +59,21 @@ class IndexView(generic.ListView):    # Aqui podemos listar as opções de consu
     template_name = "hospital/index.html"
     context_object_name = "lista_consultas"
     def get_queryset(self):
-
         return Consulta.objects.all()
 
+class AuxiliarView(LoginRequiredMixin, generic.ListView):
+    model = Consulta
+    template_name = "hospital/auxiliar.html"
+    context_object_name = "consultas_todas"
 
+    def get_queryset(self):
+        return Consulta.objects.all()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+    
+    
 class UtenteView(LoginRequiredMixin,generic.DetailView):
     model = Consulta
     template_name = "hospital/utente.html"
