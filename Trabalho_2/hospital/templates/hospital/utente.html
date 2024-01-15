@@ -9,30 +9,62 @@
 </head>
 <body>
     <div class="container">
-        <div class="medical-record">
-            <h1>Ficha de {{ consultas_utente.first.utente.nome }}</h1>
+        <div class="title">
+            <h1 class="">Ficha de {{ consultas_utente.first.utente.nome }}</h1>
+            <div class="actions">
+                <form method="post" action="{% url 'hospital:logout' %}">
+                {% csrf_token %}
+                <button class="logout-button" type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+        <div class="content">
+            <div class="utente-info">
+                <ul>
+                    <li><strong>Nome:</strong> {{ consultas_utente.first.utente.primeiro_nome }} {{ consultas_utente.first.utente.apelido }}</li>
+                    <li><strong>Data de Nascimento:</strong> {{ consultas_utente.first.utente.data_nascimento }}</li>
+                    <li><strong>Género:</strong> {{ consultas_utente.first.utente.genero }}</li>
+                    <li><strong>Contacto:</strong> {{ consultas_utente.first.utente.telemovel }}</li>
+                    <li><strong>Email:</strong> {{ consultas_utente.first.utente.email }}</li>
+                    <li><strong>Contacto de emergência:</strong> {{ consultas_utente.first.utente.contacto_emergencia }}</li>
+                    <li><strong>Tem seguro:</strong> {{ consultas_utente.first.utente.tem_seguro }}</li>
+                    <!-- Add other utente information here -->
+                </ul>
+            </div>
             <ul class="consultation-list">
                 {% for consulta in consultas_utente %}
                     <li class="consultation-item">
                         <p class="doctor-info">Consulta prestada por {{ consulta.medico.nome }}</p>
+                        <p class="unidade-saude">UPCS: {{ consulta.unidade_saude }}</p>
+                        <p class="data-consulta">Data: {{ consulta.data }}</p>
                         <p class="prescription-heading">Prescrições:</p>
-                        <ul class="prescription-list">
-                            {% for medicamento in consulta.prescricoes.all %}
-                                <li>{{ medicamento.nome }}</li>
+                            {% for prescricao in consulta.prescricoes.all %}
+                                <ul class="prescription-list">
+                                    <li>{{ prescricao }}</li>
+                                </ul>
                             {% endfor %}
-                        </ul>
+                        <p class="measurements-heading">Medições:</p>
+                            {% for medicao in consulta.medicoes.all %}
+                                <ul class="measurements-list">
+                                    <li>{{ medicao.tipo }}: {{ medicao.valor }} {{ medicao.unidades }}</li>
+                                </ul>
+                            {% endfor %}
+                        <p class="exams-heading">Exames:</p>
+                            {% for exame in consulta.exames.all %}
+                                <ul class="exams-list">
+                                    <li>{{ exame.nome_exame }}</li>
+                                    <li>Realizado a {{ exame.data_realizacao }}</li>
+                                    <li>Resultado: {{ exame.resultado }}</li>
+                                </ul>
+                            {% endfor %}
+
                     </li>
                 {% endfor %}
             </ul>
         </div>
     </div>
-    <div class="actions">
-        <form method="post" action="{% url 'hospital:logout' %}">
-            {% csrf_token %}
-        <button type="submit" >Logout</button></form>
         <div class="footnote">
             <p>Developed by Ricardo, Monica & Dinis</p>
         </div>
-    </div>
 </body>
 </html>

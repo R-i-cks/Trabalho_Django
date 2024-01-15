@@ -1,90 +1,118 @@
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #f8f9fa; /* Cor de fundo da página */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 .container {
-    flex: 1;
     display: flex;
-    background-color: #ffffff; /* Cor de fundo da área de conteúdo */
-    border-radius: 10px; /* Bordas curvas */
-    overflow: hidden; /* Para garantir que as bordas curvas sejam aplicadas corretamente */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra para adicionar destaque */
+    flex-direction: column;
+    height: 100%;
 }
 
-.medical-record {
-    max-width: 600px;
+.title{
+    display:flex;
+    flex direction: column;
+    justify-content: space-between;
+}
+
+.content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    flex-grow: 1; /* Allow the content to fill the available space */
+}
+
+.utente-info {
+    width: 30%;
+}
+
+.utente-info ul {
+    list-style: none;
+    padding: 0;
+}
+
+.utente-info li {
+    margin-bottom: 10px;
+}
+
+.separator {
+    border-right: 2px solid #ddd;
+    height: 100%;
     margin-right: 20px;
 }
 
-h1 {
-    color: #333;
-}
-
 .consultation-list {
+    flex-grow: 1;
     list-style: none;
     padding: 0;
 }
 
 .consultation-item {
+    display: flex;
+    flex-direction: column;
     border: 1px solid #ddd;
     margin-bottom: 20px;
     padding: 10px;
-    border-radius: 8px; /* Bordas curvas */
+    border-radius: 8px;
 }
 
-.doctor-info {
+.consultation-item .doctor-info {
     font-weight: bold;
     color: #007BFF;
 }
 
-.prescription-heading {
-    font-weight: bold;
-    color: #28A745;
-    margin-top: 10px;
-}
-
-.prescription-list {
+.prescription-list,
+.measurements-list,
+.exams-list {
     list-style: none;
     padding: 0;
     margin-top: 5px;
 }
 
-.prescription-list li {
-    color: #6C757D;
+.prescription-heading,
+.measurements-heading,
+.exams-heading {
+    font-weight: bold;
+    color: #28A745; /* Different color for headings */
 }
 
-.actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 20px;
-}
-
-button {
-    padding: 10px;
-    background-color: #dc3545;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 20px; /* Increased border-radius for a more rounded button */
-    transition: background-color 0.3s ease; /* Efeito de transição para a cor de fundo */
-}
-
-button:hover {
-    background-color: #c82333; /* Cor alterada ao passar o mouse */
+.prescription-list li,
+.measurements-list li,
+.exams-list li {
+    display: inline-block;
+    margin-right: 10px; /* Add spacing between items */
 }
 
 .footnote {
-    margin-top: auto; /* Push the footnote to the bottom */
-    padding: 10px; /* Adjust the padding */
+    padding: 10px;
     background-color: #f0f0f0;
     text-align: center;
-    border-radius: 0 0 8px 8px; /* Curva apenas a parte inferior da nota de rodapé */
-    font-size: 14px; /* Adjust the font size */
-    color: #888; /* Gray color for the text */
+    border-radius: 0;
+    font-size: 14px;
+    color: #888;
+}
+.logout-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color:# ; /* Button background color */
+  color: #fff; /* Button text color */
+  border: 2px solid #2980b9; /* Border color */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #2980b9; /* Hover background color */
+  color: #fff; /* Hover text color */
+}
+
+/* Optional: Add some box shadow for a lifted effect */
+.logout-button:active {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
