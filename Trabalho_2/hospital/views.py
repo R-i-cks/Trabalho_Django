@@ -1,9 +1,10 @@
 from django.contrib import messages
+from django.db.models import Count
 from django.views import generic
 from django.utils import timezone
 from django.views.decorators.http import require_POST
 
-from .models import Utente, Medico, Medicamento, Consulta
+from .models import *
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
@@ -35,6 +36,9 @@ def user_login(request):
             elif user_group.name == "Medico":
                 medico_id = Medico.objects.get(nome=username).id
                 return redirect("hospital:medico", id=medico_id)
+            elif user_group.name == "Familiar":
+                familiar_id = Familiar.objects.get(nome=username).id
+                return redirect("hospital:familiar", id=familiar_id)
 
         else:
             messages.error(request, "Credenciais inválidas.")
@@ -87,3 +91,14 @@ class MedicoView(LoginRequiredMixin,generic.DetailView):
         context['consultas_medico'] = consultas_medico
         return context
 
+class FamiliarView(LoginRequiredMixin, generic.ListView):
+    model = Consulta
+    template_name = "hospital/index.html"
+    context_object_name = "utentes_familiares"
+    pk_url_kwarg = 'id'
+    def get_object(self, queryset=None):
+        return get_object_or_404(Familiar, id=self.kwargs['id'])
+    def get_queryset(self):
+        familiar = self.get_object()
+        lista_utentes = familiar.utente.all()
+        return lista_utentes

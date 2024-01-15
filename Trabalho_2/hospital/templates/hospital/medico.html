@@ -47,11 +47,13 @@
                                 {% endfor %}
                             {% endfor %}
                         <p class="measurements-heading">Medições:</p>
+                        <div class="measurements-op">
                             {% for medicao in consulta.medicoes.all %}
                                 <ul class="measurements-list">
                                     <li>{{ medicao.tipo }}: {{ medicao.valor }} {{ medicao.unidades }}</li>
                                 </ul>
                             {% endfor %}
+                        </div>
                         <p class="exams-heading">Exames:</p>
                             {% for exame in consulta.exames.all %}
                                 <ul class="exams-list">

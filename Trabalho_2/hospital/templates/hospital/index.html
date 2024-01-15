@@ -1,13 +1,39 @@
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'hospital/style.css' %}">
-{% if lista_consultas %}
-<h1>Aqui temos uma lista de ids de consultas</h1>
-    <ul>
-    {% for consulta in lista_consultas %}
-        <li> <a href="{% url 'hospital:detail' consulta.id %}" >Consulta: {{ consulta.id }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Não há consultas a mostrar</p>
-{% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Familiar</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hospital/index.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1> Utentes de quem é familiar</h1>
+            <div class="actions">
+                <form method="post" action="{% url 'hospital:logout' %}">
+                    {% csrf_token %}
+                    <button class="logout-button" type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+        <div class="content">
+            <ul>
+                {% if utentes_familiares %}
+                    {% for utente in utentes_familiares %}
+                        <li>
+                            <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} :{{ utente.primeiro_nome }} {{ utente.apelido }} </a>
+                        </li>
+                    {% endfor %}
+                {% else %}
+                    <p>Não há utentes associados como familiar</p>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="footnote">
+            <p>Developed by Ricardo, Monica & Dinis</p>
+        </div>
+    </div>
+</body>
+</html>
