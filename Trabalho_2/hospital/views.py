@@ -9,7 +9,7 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
@@ -28,21 +28,32 @@ def user_login(request):
 
         if user is not None:
             login(request, user)
-            user_group = user.groups.first()
 
-            if user_group.name == "Utente":
-                utente_id = Utente.objects.get(nome=username).id
-                return redirect("hospital:utente", id=utente_id)
-            elif user_group.name == "Medico":
-                medico_id = Medico.objects.get(nome=username).id
-                return redirect("hospital:medico", id=medico_id)
-            elif user_group.name == "Familiar":
-                familiar_id = Familiar.objects.get(nome=username).id
-                return redirect("hospital:familiar", id=familiar_id)
+            preferred_groups = ["Utente", "Medico", "Familiar", "Auxiliar"]
 
-        else:
-            messages.error(request, "Credenciais inválidas.")
-            return redirect("hospital:user_login")
+            for group_name in preferred_groups:
+                try:
+                    group = Group.objects.get(name=group_name)
+                    if group in user.groups.all():
+                        if group_name == "Utente":
+                            utente_id = Utente.objects.get(nome=username).id
+                            return redirect("hospital:utente", id=utente_id)
+
+                        elif group_name == "Medico":
+                            medico_id = Medico.objects.get(nome=username).id
+                            return redirect("hospital:medico", id=medico_id)
+
+                        elif group_name == "Familiar":
+                            familiar_id = Familiar.objects.get(nome=username).id
+                            return redirect("hospital:familiar", id=familiar_id)
+
+                        elif group_name == "Auxiliar":
+                            auxiliar_id = Auxiliar.objects.get(nome=username).id
+                            return redirect("hospital:auxiliar", id=auxiliar_id)
+
+                except Group.DoesNotExist:
+                    messages.error(request, "Credenciais inválidas")
+                    return redirect("hospital:user_login")
 
     return render(request,"hospital/login.html")
 
@@ -102,3 +113,11 @@ class FamiliarView(LoginRequiredMixin, generic.ListView):
         familiar = self.get_object()
         lista_utentes = familiar.utente.all()
         return lista_utentes
+
+class AuxiliarView(LoginRequiredMixin, generic.ListView):
+    model = Consulta
+    template_name = "hospital/index.html"
+    context_object_name = "consultas_todas"
+
+    def get_queryset(self):
+        return Consulta.objects.all()
