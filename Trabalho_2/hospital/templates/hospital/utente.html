@@ -42,7 +42,7 @@
                                 {% for medicamento in prescricao.medicamento.all %}
                                 <ul class="prescription-list">
                                     <li>Tomar {{ medicamento.nome }}, {{prescricao.dose_diaria}} vezes ao dia |</li>
-                                    <li>Início da toma a: {{prescricao.validade_prescricao}} |</li>
+                                    <li>Início da toma a: {{prescricao.inicio_toma}} |</li>
                                     <li>Válida durante {{prescricao.validade_prescricao}} meses |</li>
                                 </ul>
                                 {% endfor %}

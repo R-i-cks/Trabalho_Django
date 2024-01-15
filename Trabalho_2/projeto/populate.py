@@ -17,13 +17,12 @@ def data_aleatoria(ano_min=1940, ano_limite=2023):
     data_aware = timezone.make_aware(data, timezone.get_current_timezone())
 
     return data_aware
+
 def telemovel():
     operadora = random.choice(["91","92","93","96"])
-    resto = ""
-    for i in range(7):
-        n = str(random.randrange(0,9))
-        resto = "".join(n)
+    resto = "".join(str(random.randrange(0, 9)) for _ in range(7))
     return int(f"{operadora}{resto}")
+    
 
 def run():
     grupo_medicos, created = Group.objects.get_or_create(name='Medico')
@@ -142,10 +141,12 @@ def run():
         c = Consulta(utente = u, medico = m, data=data_aleatoria(2024,2026),
                      unidade_saude = random.choice(upcs))
         c.save()
+        tipos_disponiveis = ["peso", "altura", "PA"]
 
-        #Mediçoes ---------------------------------------
         for j in range(2):
-            tipo = random.choice(["peso", "altura", "PA"])
+            tipo = random.choice(tipos_disponiveis)
+            tipos_disponiveis.remove(tipo)
+
             if tipo == "peso":
                 valor = random.randrange(50, 100)
                 unidade = "kg"
