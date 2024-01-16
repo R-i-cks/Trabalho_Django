@@ -33,7 +33,7 @@
             <ul class="consultation-list">
                 {% for consulta in consultas_medico %}
                     <li class="consultation-item">
-                        <p class="utente-info">Consulta prestada a {{ consulta.utente.nome }}</p>
+                        <p class="utente-info">Consulta prestada a <a href="{% url 'hospital:utente' id=consulta.utente.id %}">{{ consulta.utente.nome }}</a></p>
                         <p class="unidade-saude">UPCS: {{ consulta.unidade_saude }}</p>
                         <p class="data-consulta">Data: {{ consulta.data }}</p>
                         <p class="prescription-heading">Prescrições:</p>

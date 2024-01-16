@@ -21,6 +21,7 @@ def home(request):
 @ensure_csrf_cookie
 def user_login(request):
     if request.method == "POST":
+
         username = request.POST.get('username')
         password = request.POST.get('pass')
 
@@ -29,7 +30,7 @@ def user_login(request):
         if user is not None:
             login(request, user)
 
-            preferred_groups = ["Utente", "Medico", "Familiar", "Auxiliar"]
+            preferred_groups = ["Utente", "Medico", "Familiar", "Auxiliar","Enfermeiro"]
 
             for group_name in preferred_groups:
                 try:
@@ -49,7 +50,11 @@ def user_login(request):
 
                         elif group_name == "Auxiliar":
                             auxiliar_id = Auxiliar.objects.get(nome=username).id
-                            return redirect("hospital:index_auxiliar", id=auxiliar_id)
+                            return redirect("hospital:auxiliar", id=auxiliar_id)
+
+                        elif group_name == "Enfermeiro" :
+                            enfermeiro_id = Enfermeiro.objects.get(nome=username).id
+                            return redirect("hospital:enfermeiro", id=enfermeiro_id)
 
                 except Group.DoesNotExist:
                     messages.error(request, "Credenciais inválidas")
@@ -76,16 +81,12 @@ class ListaConsultas(generic.ListView):    # Aqui podemos listar as opções de 
         return Consulta.objects.all()
     
 class IndexAuxiliarView(generic.ListView):
+    model = Consulta
     template_name = 'hospital/index_auxiliar.html'
     context_object_name = "index_auxiliar"
-    pk_url_kwarg = 'id'
-    def get(self, request, id):
-        return render(request, self.template_name, {'id': id})
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        consultas_todas = Consulta.objects.all()
-        context['consultas_todas'] = consultas_todas
-        return context
+
+    def get_queryset(self):
+        return Consulta.objects.all()
 
 class UtenteView(LoginRequiredMixin,generic.DetailView):
     model = Consulta
@@ -129,10 +130,29 @@ class FamiliarView(LoginRequiredMixin, generic.ListView):
         lista_utentes = familiar.utente.all()
         return lista_utentes
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import generic
+from .models import Consulta, Utente, Medico, Familiar, Enfermeiro
+
 class AuxiliarView(LoginRequiredMixin, generic.ListView):
+    template_name = "hospital/index.html"
+    context_object_name = "dados"
+
+    def get_queryset(self):
+        return Consulta.objects.all()
+
+class ListaUtentesView(LoginRequiredMixin, generic.ListView):
+    model= Utente
+    template_name = "hospital/index.html"
+    context_object_name = "utentes"
+
+    def get_queryset(self):
+        return Utente.objects.all()
+class EnfermeiroView(LoginRequiredMixin, generic.ListView): # temos de passar todos os objetos a que tem acesso
     model = Consulta
-    template_name = "hospital/auxiliar.html"
-    context_object_name = "consultas_todas"
+    template_name = "hospital/index.html"
+    context_object_name = "consultas_enfermeiro"
+
 
     def get_queryset(self):
         return Consulta.objects.all()

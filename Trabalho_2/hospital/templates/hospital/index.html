@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="title">
-            <h1> Utentes de quem é familiar</h1>
+            <h1> Bem vindo {{user.username}} </h1>
             <div class="actions">
                 <form method="post" action="{% url 'hospital:logout' %}">
                     {% csrf_token %}
@@ -26,9 +26,30 @@
                             <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} :{{ utente.primeiro_nome }} {{ utente.apelido }} </a>
                         </li>
                     {% endfor %}
-                {% else %}
-                    <p>Não há utentes associados como familiar</p>
-                {% endif %}
+                {% elif consultas_enfermeiro %}
+                    {% for consulta in consultas_enfermeiro %}
+                         <li>
+                            <a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} :{{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }} </a>
+                        </li>
+                    {% endfor %}
+               {% elif dados %}
+                    <ul class="lista_links">
+                        <li>Consultas:</li>
+                        <li>Utentes:</li>
+                        <li>Médicos:</li>
+                        <li>Enfermeiros:</li>
+                        <li>Familiares:</li>
+                        <li>Medicamentos:</li>
+                    </ul>
+                {% elif utentes %}
+                    {% for utente in utentes %}
+                         <li>
+                            <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} :{{ utente.primeiro_nome }} {{ utente.apelido }} </a>
+                        </li>
+                    {% endfor %}
+               {% else %}
+                    <p>Não há dados a mostrar</p>
+               {% endif %}
             </ul>
         </div>
         <div class="footnote">
