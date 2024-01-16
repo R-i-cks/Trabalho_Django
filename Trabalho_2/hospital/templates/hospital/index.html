@@ -63,7 +63,7 @@
                 {% elif consultas %}
                 <h2> Estas são as consultas existentes na base de dados: </h2>
                     {% for consulta in consultas %}
-                        <li>{{ consulta.utente.nome }} : {{ consulta.data }}</li>
+                        <li><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} : {{ consulta.data }}</li>
                     {% endfor %}
 
                 {% elif utentes %}
