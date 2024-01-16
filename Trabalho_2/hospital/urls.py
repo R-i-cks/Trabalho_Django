@@ -19,7 +19,6 @@ urlpatterns = [
     path("familiar/<int:id>/", views.FamiliarView.as_view(), name="familiar"),
     path("auxiliar/<int:id>/", views.AuxiliarView.as_view(), name="auxiliar"),
     path("enfermeiro/<int:id>/", views.EnfermeiroView.as_view(), name="enfermeiro"),
-    path("index_auxiliar/", views.IndexAuxiliarView.as_view(), name="index_auxiliar"),
     path("medicamento/<int:id>/", views.MedicamentoView.as_view(), name="medicamento"),
     path("utentes/", ListaUtentesView.as_view(), name="utentes"),
     path("consultas/", ListaConsultasView.as_view(), name="consultas"),

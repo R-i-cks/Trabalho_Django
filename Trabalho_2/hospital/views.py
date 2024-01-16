@@ -78,27 +78,32 @@ def logout_view(request):
 class IndexView(generic.ListView):
     template_name = "hospital/index.html"
     context_object_name = "lista_consultas"
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
 
     def get_queryset(self):
         return Consulta.objects.all()
 
 
-class ListaConsultas(generic.ListView):
+class ListaConsultas(LoginRequiredMixin,UserPassesTestMixin,generic.ListView):
     template_name = "hospital/lista_consultas.html"
     context_object_name = "lista_consultas"
 
-    def get_queryset(self):
-        return Consulta.objects.all()
-
-
-class IndexAuxiliarView(generic.ListView):
-    model = Consulta
-    template_name = "hospital/index_auxiliar.html"
-    context_object_name = "index_auxiliar"
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
 
 
     def get_queryset(self):
         return Consulta.objects.all()
+
+
+
 
 class UtenteView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = Consulta
@@ -131,12 +136,21 @@ class UtenteView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
         return context
 
 
-class MedicoView(LoginRequiredMixin, generic.DetailView):
+class MedicoView(LoginRequiredMixin,UserPassesTestMixin, generic.DetailView):
     model = Consulta
     template_name = "hospital/medico.html"
     context_object_name = "consultas_medico"
     pk_url_kwarg = "id"
 
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        medico = self.get_object()
+        if grupos_utilizador.filter(name="Medico").exists():
+            return medico.nome==self.request.user.username
+        else:
+            return grupos_utilizador.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
     def get_object(self, queryset=None):
         return get_object_or_404(Medico, id=self.kwargs["id"])
 
@@ -148,12 +162,20 @@ class MedicoView(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class FamiliarView(LoginRequiredMixin, generic.ListView):
+class FamiliarView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
     model = Consulta
     template_name = "hospital/index.html"
     context_object_name = "utentes_familiares"
     pk_url_kwarg = "id"
-
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        familiar = self.get_object()
+        if grupos_utilizador.filter(name="Familiar").exists():
+            return familiar.nome==self.request.user.username
+        else:
+            return grupos_utilizador.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
     def get_object(self, queryset=None):
         return get_object_or_404(Familiar, id=self.kwargs["id"])
 
@@ -166,9 +188,14 @@ class FamiliarView(LoginRequiredMixin, generic.ListView):
 
 
 
-class AuxiliarView(LoginRequiredMixin, generic.ListView):
+class AuxiliarView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
     template_name = "hospital/index.html"
     context_object_name = "dados"
+
+    def test_func(self): # Como se trata de uma pag igual para todos os auxiliares, e este é o user com mais permisssões, so os membros deste grupo podem aceder
+            return self.request.user.groups.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Turn around, nothing to see here")
 
     def get_queryset(self):
         return Consulta.objects.all()
@@ -183,46 +210,74 @@ class MedicamentoView(LoginRequiredMixin, generic.DetailView):
         return get_object_or_404(Medicamento, id=self.kwargs["id"])
 
 
-class ListaUtentesView(LoginRequiredMixin, generic.ListView):
+class ListaUtentesView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
     model = Utente
     template_name = "hospital/index.html"
     context_object_name = "utentes"
 
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Profissional").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
     def get_queryset(self):
         return Utente.objects.all()
 
 
-class ListaConsultasView(LoginRequiredMixin, generic.ListView):
+class ListaConsultasView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
     model = Consulta
     template_name = "hospital/index.html"
     context_object_name = "consultas"
+
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Profissional").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
 
     def get_queryset(self):
         return Consulta.objects.all()
 
 
-class ListaMedicosView(LoginRequiredMixin, generic.ListView):
+class ListaMedicosView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
     model = Medico
     template_name = "hospital/index.html"
     context_object_name = "medicos"
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
 
     def get_queryset(self):
         return Medico.objects.all()
 
 
-class ListaFamiliaresView(LoginRequiredMixin, generic.ListView):
+class ListaFamiliaresView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
     model = Familiar
     template_name = "hospital/index.html"
     context_object_name = "familiares"
+
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
 
     def get_queryset(self):
         return Familiar.objects.all()
 
 
-class ListaEnfermeirosView(LoginRequiredMixin, generic.ListView):
+class ListaEnfermeirosView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
     model = Enfermeiro
     template_name = "hospital/index.html"
     context_object_name = "enfermeiros"
+
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
 
     def get_queryset(self):
         return Enfermeiro.objects.all()
@@ -241,6 +296,12 @@ class EnfermeiroView(LoginRequiredMixin, generic.ListView):
     model = Consulta
     template_name = "hospital/index.html"
     context_object_name = "consultas_enfermeiro"
+
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Enfermeiro").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
 
     def get_queryset(self):
         return Consulta.objects.all()
