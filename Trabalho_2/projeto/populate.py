@@ -58,7 +58,6 @@ def run():
         user.groups.add(grupo_utentes)
         user.save()
         u.save()
-
     for i in range(1,51):
         genero = random.choice(["M", "F"])
         if genero == "M":

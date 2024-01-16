@@ -34,7 +34,7 @@
                 {% for consulta in consultas_medico %}
                 
                     <li class="consultation-item">
-                        <p class="utente-info">Consulta prestada a {{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }} ({{ consulta.utente.nome }}) </p>
+                        <p class="utente-info">Consulta prestada a <a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }} ({{ consulta.utente.nome }})</a> </p>
                         <p class="unidade-saude">UPCS: {{ consulta.unidade_saude }}</p>
                         <p class="data-consulta">Data: {{ consulta.data }}</p>
                         <p class="prescription-heading">Prescrições:</p>

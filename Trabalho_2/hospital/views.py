@@ -7,11 +7,11 @@ from django.views.decorators.http import require_POST
 from .models import *
 from django.urls import reverse
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
 
 
@@ -103,16 +103,29 @@ class IndexAuxiliarView(generic.ListView):
     def get_queryset(self):
         return Consulta.objects.all()
 
-
-class UtenteView(LoginRequiredMixin, generic.DetailView):
+class UtenteView(LoginRequiredMixin,UserPassesTestMixin,generic.DetailView):
     model = Consulta
     template_name = "hospital/utente.html"
     context_object_name = "consultas_utente"
     pk_url_kwarg = "id"
 
+
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        utente = self.get_object()
+        if grupos_utilizador.filter(name="Profissional").exists(): # Se True acede cc nao
+            return True
+        elif grupos_utilizador.filter(name="Familiar").exists():
+            familiar = get_object_or_404(Familiar, nome=self.request.user.username)
+            return familiar.utente.filter(nome=utente.nome).exists()
+        elif grupos_utilizador.filter(name="Utente").exists():
+            return utente.nome==self.request.user.username
+        else:
+            return False
     def get_object(self, queryset=None):
         return get_object_or_404(Utente, id=self.kwargs["id"])
-
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         utente = self.object
