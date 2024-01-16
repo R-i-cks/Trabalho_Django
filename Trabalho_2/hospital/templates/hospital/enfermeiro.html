@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Enfermeiro</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hospital/medico.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1 class="">Ficha de {{ consultas_enfermeiro.first.enfermeiro.primeiro_nome }}  {{ consultas_enfermeiro.first.enfermeiro.apelido }} <span class="badge">{{user.groups.first}} </span> </h1>
+            <div class="actions">
+                <form method="post" action="{% url 'hospital:logout' %}">
+                    {% csrf_token %}
+                    <button class="logout-button" type="submit">Logout</button>
+                </form>
+            </div>
+        </div>
+        <div class="content">
+            <div class="enfermeiro-info">
+                <ul>
+                    <li><strong>Nome:</strong> {{ consultas_enfermeiro.utente.primeiro_nome }}</li>
+                    <li><strong>Data de Nascimento:</strong> {{ consultas_enfermeiro.first.enfermeiro.data_nascimento }}</li>
+                    <li><strong>Género:</strong> {{ consultas_enfermeiro.first.enfermeiro.genero }}</li>
+                    <li><strong>Contacto:</strong> {{ consultas_enfermeiro.first.enfermeiro.telemovel }}</li>
+                    <li><strong>Email:</strong> {{ consultas_enfermeiro.first.enfermeiro.email }}</li>
+                    <li><strong>Especialidade:</strong> {{ consultas_enfermeiro.first.enfermeiro.especialidade }}</li>
+                </ul>
+                <ul>
+                        <form method="get" action="{% url 'hospital:utentes' %}">
+                            <button class="logout-button" type="submit">Utentes</button>
+                        </form>
+                    
+                </ul>
+            </div>
+            <ul class="consultation-list">
+                {% for consulta in consultas_enfermeiro %}
+                
+                    <li class="consultation-item">
+                        <p class="utente-info">Consulta prestada a <a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }} ({{ consulta.utente.nome }})</a> </p>
+                        <p class="unidade-saude">UPCS: {{ consulta.unidade_saude }}</p>
+                        <p class="data-consulta">Data: {{ consulta.data }}</p>
+                        <p class="prescription-heading">Prescrições:</p>
+                            {% for prescricao in consulta.prescricoes.all %}
+                                {% for medicamento in prescricao.medicamento.all %}
+                                    <ul class="prescription-list">
+                                        <li>Tomar {{ medicamento.nome }}, {{ prescricao.dose_diaria }} vezes ao dia |</li>
+                                        <li>Início da toma a: {{prescricao.inicio_toma}} |</li>
+                                        <li>Válida durante {{ prescricao.validade_prescricao }} meses |</li>
+                                    </ul>
+                                {% endfor %}
+                            {% endfor %}
+                        <p class="measurements-heading">Medições:</p>
+                        <div class="measurements-op">
+                            {% for medicao in consulta.enfermeiro.all %}
+                                <ul class="measurements-list">
+                                    <li>{{ medicao.tipo }}: {{ medicao.valor }} {{ medicao.unidades }}</li>
+                                </ul>
+                            {% endfor %}
+                        </div>
+                        <p class="exams-heading">Exames:</p>
+                            {% for exame in consulta.exames.all %}
+                                <ul class="exams-list">
+                                    <li>{{ exame.nome_exame }} |</li>
+                                    <li>Realizado a {{ exame.data_realizacao }} |</li>
+                                    <li>Resultado: {{ exame.resultado }} |</li>
+                                </ul>
+                            {% endfor %}
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="footnote">
+            <p>Developed by Ricardo, Monica & Dinis</p>
+        </div>
+    </div>
+</body>
+</html>
