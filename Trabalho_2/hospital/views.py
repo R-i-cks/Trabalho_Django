@@ -14,23 +14,29 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 
+
 def home(request):
-    return render(request,"hospital/home.html")
+    return render(request, "hospital/home.html")
 
 
 @ensure_csrf_cookie
 def user_login(request):
     if request.method == "POST":
-
-        username = request.POST.get('username')
-        password = request.POST.get('pass')
+        username = request.POST.get("username")
+        password = request.POST.get("pass")
 
         user = authenticate(username=username, password=password)
 
         if user is not None:
             login(request, user)
 
-            preferred_groups = ["Utente", "Medico", "Familiar", "Auxiliar","Enfermeiro"]
+            preferred_groups = [
+                "Utente",
+                "Medico",
+                "Familiar",
+                "Auxiliar",
+                "Enfermeiro",
+            ]
 
             for group_name in preferred_groups:
                 try:
@@ -52,7 +58,7 @@ def user_login(request):
                             auxiliar_id = Auxiliar.objects.get(nome=username).id
                             return redirect("hospital:auxiliar", id=auxiliar_id)
 
-                        elif group_name == "Enfermeiro" :
+                        elif group_name == "Enfermeiro":
                             enfermeiro_id = Enfermeiro.objects.get(nome=username).id
                             return redirect("hospital:enfermeiro", id=enfermeiro_id)
 
@@ -60,79 +66,97 @@ def user_login(request):
                     messages.error(request, "Credenciais inválidas")
                     return redirect("hospital:user_login")
 
-    return render(request,"hospital/login.html")
+    return render(request, "hospital/login.html")
 
 
 @require_POST
 def logout_view(request):
     logout(request)
-    return render(request,"hospital/logout.html")
+    return render(request, "hospital/logout.html")
 
-class IndexView(generic.ListView):    # Aqui podemos listar as opções de consulta , utente, medico, medicamento, consulta
+
+class IndexView(
+    generic.ListView
+):  # Aqui podemos listar as opções de consulta , utente, medico, medicamento, consulta
     template_name = "hospital/index.html"
     context_object_name = "lista_consultas"
+
     def get_queryset(self):
         return Consulta.objects.all()
 
-class ListaConsultas(generic.ListView):    # Aqui podemos listar as opções de consulta , utente, medico, medicamento, consulta
+
+class ListaConsultas(
+    generic.ListView
+):  # Aqui podemos listar as opções de consulta , utente, medico, medicamento, consulta
     template_name = "hospital/lista_consultas.html"
     context_object_name = "lista_consultas"
+
     def get_queryset(self):
         return Consulta.objects.all()
-    
+
+
 class IndexAuxiliarView(generic.ListView):
     model = Consulta
-    template_name = 'hospital/index_auxiliar.html'
+    template_name = "hospital/index_auxiliar.html"
     context_object_name = "index_auxiliar"
 
     def get_queryset(self):
         return Consulta.objects.all()
 
-class UtenteView(LoginRequiredMixin,generic.DetailView):
+
+class UtenteView(LoginRequiredMixin, generic.DetailView):
     model = Consulta
     template_name = "hospital/utente.html"
     context_object_name = "consultas_utente"
-    pk_url_kwarg = 'id'
+    pk_url_kwarg = "id"
 
     def get_object(self, queryset=None):
-        return get_object_or_404(Utente, id=self.kwargs['id'])
+        return get_object_or_404(Utente, id=self.kwargs["id"])
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         utente = self.object
         consultas_utente = Consulta.objects.filter(utente=utente)
-        context['consultas_utente'] = consultas_utente
+        context["consultas_utente"] = consultas_utente
         return context
 
-class MedicoView(LoginRequiredMixin,generic.DetailView):
+
+class MedicoView(LoginRequiredMixin, generic.DetailView):
     model = Consulta
     template_name = "hospital/medico.html"
     context_object_name = "consultas_medico"
-    pk_url_kwarg = 'id'
+    pk_url_kwarg = "id"
 
     def get_object(self, queryset=None):
-        return get_object_or_404(Medico, id=self.kwargs['id'])
+        return get_object_or_404(Medico, id=self.kwargs["id"])
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         medico = self.object
         consultas_medico = Consulta.objects.filter(medico=medico)
-        context['consultas_medico'] = consultas_medico
+        context["consultas_medico"] = consultas_medico
         return context
+
 
 class FamiliarView(LoginRequiredMixin, generic.ListView):
     model = Consulta
     template_name = "hospital/index.html"
     context_object_name = "utentes_familiares"
-    pk_url_kwarg = 'id'
+    pk_url_kwarg = "id"
+
     def get_object(self, queryset=None):
-        return get_object_or_404(Familiar, id=self.kwargs['id'])
+        return get_object_or_404(Familiar, id=self.kwargs["id"])
+
     def get_queryset(self):
         familiar = self.get_object()
         lista_utentes = familiar.utente.all()
         return lista_utentes
 
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import generic
 from .models import Consulta, Utente, Medico, Familiar, Enfermeiro
+
 
 class AuxiliarView(LoginRequiredMixin, generic.ListView):
     template_name = "hospital/index.html"
@@ -141,18 +165,67 @@ class AuxiliarView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Consulta.objects.all()
 
+
 class ListaUtentesView(LoginRequiredMixin, generic.ListView):
-    model= Utente
+    model = Utente
     template_name = "hospital/index.html"
     context_object_name = "utentes"
 
     def get_queryset(self):
         return Utente.objects.all()
-class EnfermeiroView(LoginRequiredMixin, generic.ListView): # temos de passar todos os objetos a que tem acesso
+
+
+class ListaConsultasView(LoginRequiredMixin, generic.ListView):
+    model = Consulta
+    template_name = "hospital/index.html"
+    context_object_name = "consultas"
+
+    def get_queryset(self):
+        return Consulta.objects.all()
+
+
+class ListaMedicosView(LoginRequiredMixin, generic.ListView):
+    model = Medico
+    template_name = "hospital/index.html"
+    context_object_name = "medicos"
+
+    def get_queryset(self):
+        return Medico.objects.all()
+
+
+class ListaFamiliaresView(LoginRequiredMixin, generic.ListView):
+    model = Familiar
+    template_name = "hospital/index.html"
+    context_object_name = "familiares"
+
+    def get_queryset(self):
+        return Familiar.objects.all()
+
+
+class ListaEnfermeirosView(LoginRequiredMixin, generic.ListView):
+    model = Enfermeiro
+    template_name = "hospital/index.html"
+    context_object_name = "enfermeiros"
+
+    def get_queryset(self):
+        return Enfermeiro.objects.all()
+
+
+class ListaMedicamentosView(LoginRequiredMixin, generic.ListView):
+    model = Medicamento
+    template_name = "hospital/index.html"
+    context_object_name = "medicamentos"
+
+    def get_queryset(self):
+        return Medicamento.objects.all()
+
+
+class EnfermeiroView(
+    LoginRequiredMixin, generic.ListView
+):  # temos de passar todos os objetos a que tem acesso
     model = Consulta
     template_name = "hospital/index.html"
     context_object_name = "consultas_enfermeiro"
-
 
     def get_queryset(self):
         return Consulta.objects.all()

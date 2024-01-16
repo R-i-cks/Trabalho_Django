@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ficha de Familiar</title>
+    <title>Home</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'hospital/index.css' %}">
 </head>
@@ -23,30 +23,67 @@
                 {% if utentes_familiares %}
                     {% for utente in utentes_familiares %}
                         <li>
-                            <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} :{{ utente.primeiro_nome }} {{ utente.apelido }} </a>
+                            <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} : {{ utente.primeiro_nome }} {{ utente.apelido }} </a>
                         </li>
                     {% endfor %}
                 {% elif consultas_enfermeiro %}
                     {% for consulta in consultas_enfermeiro %}
                          <li>
-                            <a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} :{{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }} </a>
+                            <a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} : {{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }} </a>
                         </li>
                     {% endfor %}
-               {% elif dados %}
-                    <ul class="lista_links">
-                        <li>Consultas:</li>
-                        <li>Utentes:</li>
-                        <li>Médicos:</li>
-                        <li>Enfermeiros:</li>
-                        <li>Familiares:</li>
-                        <li>Medicamentos:</li>
-                    </ul>
+      
+                {% elif dados %}
+                <ul class="lista_links">
+                    <li><a href="{% url 'hospital:consultas' %}">Consultas</a></li>
+                    <li><a href="{% url 'hospital:utentes' %}">Utentes</a></li>
+                    <li><a href="{% url 'hospital:medicos' %}">Médicos</a></li>
+                    <li><a href="{% url 'hospital:enfermeiros' %}">Enfermeiros</a></li>
+                    <li><a href="{% url 'hospital:medicamentos' %}">Medicamentos</a></li>
+                    <li><a href="{% url 'hospital:familiares' %}">Familiares</a></li>
+                </ul>
+
+
+                {% elif medicos %}
+                    {% for medico in medicos %}
+                        <li>
+                            <a href="{% url 'hospital:medico' medico.id %}">{{ medico.nome }} : {{ medico.primeiro_nome }} {{ medico.apelido }} </a>
+                        </li>
+                    {% endfor %}
+           
+                {% elif familiares %}
+                    {% for familiar in familiares %}
+                        <li>
+                            <a href="{% url 'hospital:familiar' familiar.id %}">{{ familiar.nome }} : {{ familiar.primeiro_nome }} {{ familiar.apelido }} </a>
+                        </li>
+                    {% endfor %}
+
+                {% elif consultas %}
+                    {% for consulta in consultas %}
+                        <li>{{ consulta.utente.nome }} : {{ consulta.data }}</li>
+                    {% endfor %}
+
                 {% elif utentes %}
                     {% for utente in utentes %}
                          <li>
-                            <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} :{{ utente.primeiro_nome }} {{ utente.apelido }} </a>
+                            <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} : {{ utente.primeiro_nome }} {{ utente.apelido }} </a>
                         </li>
                     {% endfor %}
+                
+                {% elif enfermeiros %}
+                    {% for enfermeiro in enfermeiros %}
+                         <li>
+                            <a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.nome }} : {{ enfermeiro.primeiro_nome }} {{ enfermeiro.apelido }} </a>
+                        </li>
+                    {% endfor %}
+
+                {% elif medicamentos %}
+                    {% for medicamento in medicamentos %}
+                         <li>
+                            <a href="{% url 'hospital:medicamento' medicamento.id %}">{{ medicamento.nome }} {{ medicamento.dosagem }} : {{ medicamento.fabricante }} </a>
+                        </li>
+                    {% endfor %}
+
                {% else %}
                     <p>Não há dados a mostrar</p>
                {% endif %}
