@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="title">
-            <h1 class="">Ficha de {{ consultas_medico.first.medico.primeiro_nome }} <span class="badge">{{user.groups.first}} </span> </h1>
+            <h1 class="">Ficha de {{ consultas_medico.first.medico.primeiro_nome }} {{ consultas_medico.first.medico.apelido }} <span class="badge">{{user.groups.first}} </span> </h1>
             <div class="actions">
                 <form method="post" action="{% url 'hospital:logout' %}">
                     {% csrf_token %}

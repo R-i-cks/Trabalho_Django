@@ -29,7 +29,7 @@ body {
 }
 
 h2 {
-    color: #e44d26;
+    color: #f57e00;
     /* Warm orange color for the title */
 }
 
@@ -58,7 +58,7 @@ input {
 
 button {
     padding: 10px;
-    background-color: #e44d26;
+    background-color: #f57e00;
     /* Warm orange color for the button */
     color: #fff;
     /* White text color */
@@ -69,7 +69,7 @@ button {
 }
 
 button:hover {
-    background-color: #d0411e;
+    background-color: #f57f0094;
     /* Darker orange on hover */
     transform: scale(1.02);
 }

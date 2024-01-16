@@ -1,5 +1,6 @@
 body,
 html {
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -12,14 +13,16 @@ html {
 }
 
 h1 {
-    margin-left: 10px;
+    margin-left: 30px;
+    color: #db6e14;
     display: flex;
 }
 
 .title {
     background-color: #f0f0f0;
-    padding: 10px;
+
     display: flex;
+    padding-right: 50px;
     justify-content: space-between;
     align-items: center;
 }
@@ -35,6 +38,7 @@ h1 {
 
 .medico-info {
     width: 30%;
+    margin-left: 20px;
 }
 
 .medico-info ul {

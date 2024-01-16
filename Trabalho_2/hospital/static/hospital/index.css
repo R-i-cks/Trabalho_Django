@@ -14,8 +14,8 @@ html {
 }
 
 h1 {
-    margin-left: 10px;
-    color:#f57e00;
+    margin-left: 30px;
+    color: #db6e14;
     display: flex;
 }
 
@@ -34,19 +34,17 @@ hr {
 
 .title {
     background-color: #f0f0f0;
-    padding: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding-right: 50px;
 }
 
 .content {
     display: auto;
     padding: 20px;
     flex-grow: 1;
-    /* Allow the content to fill the available space */
     align-items: center;
-    padding-left: 3%;
 
 }
 
@@ -89,6 +87,7 @@ p {
 
 .logout-button {
     display: inline-block;
+    padding-right: 30px;
     padding: 10px 20px;
     font-size: 16px;
     font-weight: bold;
@@ -167,7 +166,8 @@ th {
 }
 
 .grid-item {
-    background-color: #f0f0f0;;
+    background-color: #f0f0f0;
+    ;
     color: #f57e00;
     margin: 20px 20px;
     padding: 15px;
@@ -181,8 +181,9 @@ th {
 
 .grid-item:hover {
     color: #f57e00;
-    background-color: #f0f0f0a2;;
-    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+    background-color: #f0f0f0a2;
+    ;
+    box-shadow: 0 0 11px rgba(33, 33, 33, .2);
 
 
 }
