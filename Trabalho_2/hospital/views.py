@@ -96,6 +96,7 @@ class IndexAuxiliarView(generic.ListView):
     template_name = "hospital/index_auxiliar.html"
     context_object_name = "index_auxiliar"
 
+
     def get_queryset(self):
         return Consulta.objects.all()
 

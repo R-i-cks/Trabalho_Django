@@ -115,9 +115,7 @@ h1 {
     border-radius: 5px;
     background-color: #f57e00;
     color: #fff;
-    /* Button text color */
     border: 2px solid #e68028d8;
-    /* Border color */
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
