@@ -88,10 +88,10 @@ class IndexView(generic.ListView):
         return Consulta.objects.all()
 
 
-class ListaConsultas(LoginRequiredMixin,UserPassesTestMixin,generic.ListView):
+class ListaConsultas(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     template_name = "hospital/lista_consultas.html"
     context_object_name = "lista_consultas"
-
+    login_url = 'hospital:user_login'
     def test_func(self):
         grupos_utilizador = self.request.user.groups
         return grupos_utilizador.filter(name="Auxiliar").exists()
@@ -125,6 +125,7 @@ class UtenteView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     template_name = "hospital/utente.html"
     context_object_name = "consultas_utente"
     pk_url_kwarg = "id"
+    login_url = 'hospital:user_login'
 
 
     def test_func(self):
@@ -156,6 +157,7 @@ class MedicoView(LoginRequiredMixin,UserPassesTestMixin, generic.DetailView):
     template_name = "hospital/medico.html"
     context_object_name = "consultas_medico"
     pk_url_kwarg = "id"
+    login_url = 'hospital:user_login'
 
     def test_func(self):
         grupos_utilizador = self.request.user.groups
@@ -182,6 +184,7 @@ class FamiliarView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
     template_name = "hospital/index.html"
     context_object_name = "utentes_familiares"
     pk_url_kwarg = "id"
+    login_url = 'hospital:user_login'
     def test_func(self):
         grupos_utilizador = self.request.user.groups
         familiar = self.get_object()
@@ -203,10 +206,10 @@ class FamiliarView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
 
 
 
-class AuxiliarView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
+class AuxiliarView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     template_name = "hospital/index.html"
     context_object_name = "dados"
-
+    login_url = 'hospital:user_login'
     def test_func(self): # Como se trata de uma pag igual para todos os auxiliares, e este é o user com mais permisssões, so os membros deste grupo podem aceder
             return self.request.user.groups.filter(name="Auxiliar").exists()
     def handle_no_permission(self):
@@ -220,15 +223,16 @@ class MedicamentoView(LoginRequiredMixin, generic.DetailView):
     template_name = "hospital/medicamento.html"
     context_object_name = "medicamento"
     pk_url_kwarg = "id"
-
+    login_url = 'hospital:user_login'
     def get_object(self, queryset=None):
         return get_object_or_404(Medicamento, id=self.kwargs["id"])
 
 
-class ListaUtentesView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
+class ListaUtentesView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     model = Utente
     template_name = "hospital/index.html"
     context_object_name = "utentes"
+    login_url = 'hospital:user_login'
 
     def test_func(self):
         grupos_utilizador = self.request.user.groups
@@ -239,10 +243,11 @@ class ListaUtentesView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView)
         return Utente.objects.all()
 
 
-class ListaConsultasView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView):
+class ListaConsultasView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     model = Consulta
     template_name = "hospital/index.html"
     context_object_name = "consultas"
+    login_url = 'hospital:user_login'
 
     def test_func(self):
         grupos_utilizador = self.request.user.groups
@@ -258,6 +263,7 @@ class ListaMedicosView(LoginRequiredMixin,UserPassesTestMixin, generic.ListView)
     model = Medico
     template_name = "hospital/index.html"
     context_object_name = "medicos"
+    login_url = 'hospital:user_login'
     def test_func(self):
         grupos_utilizador = self.request.user.groups
         return grupos_utilizador.filter(name="Auxiliar").exists()
@@ -272,6 +278,7 @@ class ListaFamiliaresView(LoginRequiredMixin,UserPassesTestMixin, generic.ListVi
     model = Familiar
     template_name = "hospital/index.html"
     context_object_name = "familiares"
+    login_url = 'hospital:user_login'
 
     def test_func(self):
         grupos_utilizador = self.request.user.groups
@@ -287,7 +294,7 @@ class ListaEnfermeirosView(LoginRequiredMixin,UserPassesTestMixin, generic.ListV
     model = Enfermeiro
     template_name = "hospital/index.html"
     context_object_name = "enfermeiros"
-
+    login_url = 'hospital:user_login'
     def test_func(self):
         grupos_utilizador = self.request.user.groups
         return grupos_utilizador.filter(name="Auxiliar").exists()
@@ -302,15 +309,16 @@ class ListaMedicamentosView(LoginRequiredMixin, generic.ListView):
     model = Medicamento
     template_name = "hospital/index.html"
     context_object_name = "medicamentos"
-
+    login_url = 'hospital:user_login'
     def get_queryset(self):
         return Medicamento.objects.all()
 
 
-class EnfermeiroView(LoginRequiredMixin, generic.ListView):
+class EnfermeiroView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     model = Consulta
     template_name = "hospital/index.html"
     context_object_name = "consultas_enfermeiro"
+    login_url = 'hospital:user_login'
 
     def test_func(self):
         grupos_utilizador = self.request.user.groups
