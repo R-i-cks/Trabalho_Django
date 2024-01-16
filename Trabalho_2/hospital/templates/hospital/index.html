@@ -45,6 +45,7 @@
 
 
                 {% elif medicos %}
+                <h2> Estes são os médicos existentes na base de dados: </h2>
                     {% for medico in medicos %}
                         <li>
                             <a href="{% url 'hospital:medico' medico.id %}">{{ medico.nome }} : {{ medico.primeiro_nome }} {{ medico.apelido }} </a>
@@ -52,6 +53,7 @@
                     {% endfor %}
            
                 {% elif familiares %}
+                <h2> Estes são os familiares existentes na base de dados: </h2>
                     {% for familiar in familiares %}
                         <li>
                             <a href="{% url 'hospital:familiar' familiar.id %}">{{ familiar.nome }} : {{ familiar.primeiro_nome }} {{ familiar.apelido }} </a>
@@ -59,11 +61,13 @@
                     {% endfor %}
 
                 {% elif consultas %}
+                <h2> Estas são as consultas existentes na base de dados: </h2>
                     {% for consulta in consultas %}
                         <li>{{ consulta.utente.nome }} : {{ consulta.data }}</li>
                     {% endfor %}
 
                 {% elif utentes %}
+                <h2> Estes são os utentes existentes na base de dados: </h2>
                     {% for utente in utentes %}
                          <li>
                             <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} : {{ utente.primeiro_nome }} {{ utente.apelido }} </a>
@@ -71,6 +75,7 @@
                     {% endfor %}
                 
                 {% elif enfermeiros %}
+                <h2> Estes são os enfermeiros existentes na base de dados: </h2>
                     {% for enfermeiro in enfermeiros %}
                          <li>
                             <a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.nome }} : {{ enfermeiro.primeiro_nome }} {{ enfermeiro.apelido }} </a>
@@ -78,6 +83,7 @@
                     {% endfor %}
 
                 {% elif medicamentos %}
+                <h2> Estes são os medicamentos existentes na base de dados: </h2>
                     {% for medicamento in medicamentos %}
                          <li>
                             <a href="{% url 'hospital:medicamento' medicamento.id %}">{{ medicamento.nome }} {{ medicamento.dosagem }} : {{ medicamento.fabricante }} </a>
