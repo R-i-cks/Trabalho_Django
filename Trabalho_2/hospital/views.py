@@ -103,6 +103,21 @@ class ListaConsultas(LoginRequiredMixin,UserPassesTestMixin,generic.ListView):
         return Consulta.objects.all()
 
 
+class ListaUtentes(LoginRequiredMixin,UserPassesTestMixin,generic.ListView):
+    template_name = "hospital/index.html"
+    context_object_name = "lista_utentes"
+
+    def test_func(self):
+        grupos_utilizador = self.request.user.groups
+        return grupos_utilizador.filter(name="Auxiliar").exists()
+    def handle_no_permission(self):
+        return HttpResponseForbidden("Where the hell you think you're going uh?")
+
+    def get_queryset(self):
+        return Utentes.objects.all()
+
+
+
 
 
 class UtenteView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):

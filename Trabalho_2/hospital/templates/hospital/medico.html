@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="title">
-            <h1 class="">Ficha de {{ consultas_medico.first.medico.nome }}</h1>
+            <h1 class="">Ficha de {{ consultas_medico.first.medico.primeiro_nome }} <span class="badge">{{user.groups.first}} </span> </h1>
             <div class="actions">
                 <form method="post" action="{% url 'hospital:logout' %}">
                     {% csrf_token %}
@@ -27,7 +27,12 @@
                     <li><strong>Contacto:</strong> {{ consultas_medico.first.medico.telemovel }}</li>
                     <li><strong>Email:</strong> {{ consultas_medico.first.medico.email }}</li>
                     <li><strong>Especialidade:</strong> {{ consultas_medico.first.medico.especialidade }}</li>
-                    <!-- Add other medico-info as needed -->
+                </ul>
+                <ul>
+                        <form method="get" action="{% url 'hospital:utentes' %}">
+                            <button class="logout-button" type="submit">Utentes</button>
+                        </form>
+                    
                 </ul>
             </div>
             <ul class="consultation-list">

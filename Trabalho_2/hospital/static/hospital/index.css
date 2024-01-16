@@ -15,6 +15,7 @@ html {
 
 h1 {
     margin-left: 10px;
+    color:#f57e00;
     display: flex;
 }
 
@@ -103,6 +104,7 @@ p {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+
 .logout-button:hover {
     background-color: #f69337f0;
     transform: scale(1.02);
@@ -137,4 +139,56 @@ th {
     font-size: 15px;
     margin: auto 0;
 
+}
+
+
+.utentes-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #f57e00;
+    color: #fff;
+    /* Button text color */
+    border: 2px solid #e68028d8;
+    /* Border color */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.grid-container {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    padding: 10px;
+}
+
+.grid-item {
+    background-color: #f0f0f0;;
+    color: #f57e00;
+    margin: 20px 20px;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 25px;
+
+}
+
+.grid-item:hover {
+    color: #f57e00;
+    background-color: #f0f0f0a2;;
+    box-shadow: 0 0 11px rgba(33,33,33,.2); 
+
+
+}
+
+.menu-icon {
+    color: f57e00;
+    margin-bottom: 35px;
+    margin-top: 30px;
 }

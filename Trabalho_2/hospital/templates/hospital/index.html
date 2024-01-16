@@ -1,16 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'hospital/index.css' %}">
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="container">
         <div class="title">
-            <h1> Bem vindo {{user.username}} <span class="badge">{{user.groups.last}}</span> </h1>
+            <h1> Bem vindo {{user.username}} </h1>
             <div class="actions">
                 <form method="post" action="{% url 'hospital:logout' %}">
                     {% csrf_token %}
@@ -32,16 +38,66 @@
                             <a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} : {{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }} </a>
                         </li>
                     {% endfor %}
-      
+                
+                {% elif utentes %}
+                    <h2>Utentes </h2>
+                        <table>
+                            <tr>
+                            <th>ID do utente</th>
+                            <th>Nome</th>
+                            <th>Data de nascimento </th>
+                            <th>Genero</th>
+                            <th>Telemovel</th>
+                            <th>Email</th>
+                            <th>Contacto de emergência</th>
+                            <th>Seguro</th>
+                            </tr>
+                        
+                            {% for utente in utentes %}
+                                <tr>
+                                    <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} </td>
+                                    <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.primeiro_nome }} {{ utente.apelido }}</td>
+                                    <td><a>{{ utente.data_nascimento }}</td>
+                                    <td><a>{{ utente.genero }}</td>
+                                    <td><a>{{ utente.telemovel }}</td>
+                                    <td><a>{{ utente.email }}</td>
+                                    <td><a>{{ utente.contacto_emergencia }}</td>
+                                    <td><a>{{ utente.tem_seguro }}</td>
+                                </tr>           
+                            {% endfor %}
+                        </table>
+                 
+
                 {% elif dados %}
-                <ul class="lista_links">
-                    <li><a href="{% url 'hospital:consultas' %}">Consultas</a></li>
-                    <li><a href="{% url 'hospital:utentes' %}">Utentes</a></li>
-                    <li><a href="{% url 'hospital:medicos' %}">Médicos</a></li>
-                    <li><a href="{% url 'hospital:enfermeiros' %}">Enfermeiros</a></li>
-                    <li><a href="{% url 'hospital:medicamentos' %}">Medicamentos</a></li>
-                    <li><a href="{% url 'hospital:familiares' %}">Familiares</a></li>
-                </ul>
+                <div class="grid-container">
+                        <a class="grid-item" href="{% url 'hospital:consultas' %}">
+                            <i class="menu-icon fa-solid fa-calendar-days fa-2xl" ></i>
+                            Consultas
+                        </a>
+                        <a class="grid-item" href="{% url 'hospital:utentes' %}">
+                            <i class="menu-icon fa-solid fa-person fa-2xl" ></i>
+                            Utentes
+                        </a>
+                        <a class="grid-item"  href="{% url 'hospital:medicos' %}">
+                            <i class="menu-icon fa-solid fa-user-doctor fa-2xl" ></i>
+                            Médicos
+                        </a>
+                        <a class="grid-item" href="{% url 'hospital:enfermeiros' %}">
+                            <i class="menu-icon fa-solid fa-syringe fa-2xl" ></i>
+                            Enfermeiros
+                        </a>
+                        <a class="grid-item" href="{% url 'hospital:medicamentos' %}">
+                            <i class="menu-icon fa-solid fa-capsules fa-2xl" ></i>
+                            Medicamentos
+                        </a>
+                        <a class="grid-item" href="{% url 'hospital:familiares' %}">
+                            <i class="menu-icon fa-solid fa-people-roof fa-2xl" ></i>
+                            Familiares
+                        </a>
+                </div>
+              
+                
+                
 
 
                 {% elif medicos %}

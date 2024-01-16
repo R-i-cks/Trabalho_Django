@@ -13,6 +13,7 @@ html {
 
 h1 {
     margin-left: 10px;
+    display: flex;
 }
 
 .title {
@@ -129,4 +130,17 @@ h1 {
 
 .logout-button:active {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.badge {
+    background-color: #ffffff;
+    color: #f57e00;
+    border: 1px solid #f57e00;
+    padding: 4px 8px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 15px;
+    margin-left: 20px;
+    margin-bottom: auto;
+    margin-top: auto;
 }
