@@ -34,7 +34,7 @@
             <ul class="consultation-list">
                 {% for consulta in consultas_utente %}
                     <li class="consultation-item">
-                        <p class="doctor-info">Consulta prestada por {{ consulta.medico.nome }}</p>
+                        <p class="doctor-info">Consulta prestada por {{ consulta.medico.primeiro_nome }}  {{ consulta.medico.apelido }}</p>
                         <p class="unidade-saude">UPCS: {{ consulta.unidade_saude }}</p>
                         <p class="data-consulta">Data: {{ consulta.data }}</p>
                         <p class="prescription-heading">Prescrições:</p>
