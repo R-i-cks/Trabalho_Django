@@ -75,9 +75,7 @@ def logout_view(request):
     return render(request, "hospital/logout.html")
 
 
-class IndexView(
-    generic.ListView
-):  # Aqui podemos listar as opções de consulta , utente, medico, medicamento, consulta
+class IndexView(generic.ListView):
     template_name = "hospital/index.html"
     context_object_name = "lista_consultas"
 
@@ -85,9 +83,7 @@ class IndexView(
         return Consulta.objects.all()
 
 
-class ListaConsultas(
-    generic.ListView
-):  # Aqui podemos listar as opções de consulta , utente, medico, medicamento, consulta
+class ListaConsultas(generic.ListView):
     template_name = "hospital/lista_consultas.html"
     context_object_name = "lista_consultas"
 
@@ -103,7 +99,7 @@ class IndexAuxiliarView(generic.ListView):
     def get_queryset(self):
         return Consulta.objects.all()
 
-class UtenteView(LoginRequiredMixin,UserPassesTestMixin,generic.DetailView):
+class UtenteView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = Consulta
     template_name = "hospital/utente.html"
     context_object_name = "consultas_utente"
@@ -166,9 +162,7 @@ class FamiliarView(LoginRequiredMixin, generic.ListView):
         return lista_utentes
 
 
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views import generic
-from .models import Consulta, Utente, Medico, Familiar, Enfermeiro
+
 
 
 class AuxiliarView(LoginRequiredMixin, generic.ListView):
@@ -177,6 +171,15 @@ class AuxiliarView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Consulta.objects.all()
+
+class MedicamentoView(LoginRequiredMixin, generic.DetailView):
+    model = Medicamento
+    template_name = "hospital/medicamento.html"
+    context_object_name = "medicamento"
+    pk_url_kwarg = "id"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Medicamento, id=self.kwargs["id"])
 
 
 class ListaUtentesView(LoginRequiredMixin, generic.ListView):
@@ -233,9 +236,7 @@ class ListaMedicamentosView(LoginRequiredMixin, generic.ListView):
         return Medicamento.objects.all()
 
 
-class EnfermeiroView(
-    LoginRequiredMixin, generic.ListView
-):  # temos de passar todos os objetos a que tem acesso
+class EnfermeiroView(LoginRequiredMixin, generic.ListView):
     model = Consulta
     template_name = "hospital/index.html"
     context_object_name = "consultas_enfermeiro"

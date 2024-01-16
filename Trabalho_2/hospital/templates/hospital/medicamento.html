@@ -1,0 +1,10 @@
+{% if medicamento%}
+    <h1> {{medicamento.nome}}</h1>
+    <ul>
+    <li>Dosagem: {{medicamento.dosagem}}</li>
+    <li>Fabricante: {{medicamento.fabricante}}</li>
+    <li>Precisa prescrição: {{medicamento.precisa_prescricao}}</li>
+    </ul>
+{% else %}
+    <p>Não há dados a mostrar</p>
+{% endif %}
