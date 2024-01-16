@@ -1,0 +1,21 @@
+<!-- hospital/templates/hospital/list_consultas.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listagem de Consultas</title>
+    <!-- Adicione seus estilos ou scripts aqui se necessário -->
+</head>
+<body>
+    <h1>Listagem de Consultas</h1>
+    <ul>
+        {% for consulta in consultas_todas %}
+        <li>
+            {{ consulta.utente.nome }} 
+            <!-- Adicione outros detalhes da consulta conforme necessário -->
+        </li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

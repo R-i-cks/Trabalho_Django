@@ -49,7 +49,7 @@ def user_login(request):
 
                         elif group_name == "Auxiliar":
                             auxiliar_id = Auxiliar.objects.get(nome=username).id
-                            return redirect("hospital:auxiliar", id=auxiliar_id)
+                            return redirect("hospital:index_auxiliar", id=auxiliar_id)
 
                 except Group.DoesNotExist:
                     messages.error(request, "Credenciais inválidas")
@@ -67,10 +67,25 @@ class IndexView(generic.ListView):    # Aqui podemos listar as opções de consu
     template_name = "hospital/index.html"
     context_object_name = "lista_consultas"
     def get_queryset(self):
-
         return Consulta.objects.all()
 
-
+class ListaConsultas(generic.ListView):    # Aqui podemos listar as opções de consulta , utente, medico, medicamento, consulta
+    template_name = "hospital/lista_consultas.html"
+    context_object_name = "lista_consultas"
+    def get_queryset(self):
+        return Consulta.objects.all()
+    
+class IndexAuxiliarView(generic.ListView):
+    template_name = 'hospital/index_auxiliar.html'
+    context_object_name = "index_auxiliar"
+    pk_url_kwarg = 'id'
+    def get(self, request, id):
+        return render(request, self.template_name, {'id': id})
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        consultas_todas = Consulta.objects.all()
+        context['consultas_todas'] = consultas_todas
+        return context
 
 class UtenteView(LoginRequiredMixin,generic.DetailView):
     model = Consulta
@@ -116,7 +131,7 @@ class FamiliarView(LoginRequiredMixin, generic.ListView):
 
 class AuxiliarView(LoginRequiredMixin, generic.ListView):
     model = Consulta
-    template_name = "hospital/index.html"
+    template_name = "hospital/auxiliar.html"
     context_object_name = "consultas_todas"
 
     def get_queryset(self):
