@@ -7,6 +7,11 @@ html {
     height: 100vh;
 }
 
+.familiar_info {
+    width: 35%;
+    margin-left: 20px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -17,6 +22,23 @@ h1 {
     margin-left: 30px;
     color: #db6e14;
     display: flex;
+}
+
+
+.botao {
+    color: #ffffff;
+    border-radius: 5px;
+    background-color: #f57e00;
+    border-color: #88888800;
+    width: 250px;
+    height: 30px;
+}
+
+.botao:hover {
+
+    color: #f2830c;
+    background-color: #f0f0f0a2;
+    box-shadow: 0 0 11px rgba(33, 33, 33, .2);
 }
 
 
@@ -46,7 +68,18 @@ hr {
     padding: 20px;
     flex-grow: 1;
     align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
 
+.content-familiar {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.utente {
+    width: 65%;
 }
 
 ul {
@@ -206,8 +239,6 @@ th {
     background-color: #f0f0f0a2;
     ;
     box-shadow: 0 0 11px rgba(33, 33, 33, .2);
-
-
 }
 
 .menu-icon {

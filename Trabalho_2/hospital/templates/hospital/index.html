@@ -27,10 +27,26 @@
         <div class="content">
             <ul>
                 {% if utentes_familiares %}
+                <div class="content-familiar">
+                    <div class="familiar-info">
+                        <ul>
+                            <li><strong>Nome:</strong> {{ familiar.primeiro_nome }} {{familiar.apelido}}</li>
+                            <li><strong>Data de Nascimento:</strong> {{ familiar.data_nascimento }}</li>
+                            <li><strong>Género:</strong> {{ familiar.genero }}</li>
+                            <li><strong>Contacto:</strong> {{ familiar.telemovel }}</li>
+                            <li><strong>Email:</strong> {{ familiar.email }}</li>
+                            <li><strong>Especialidade:</strong> {{ familiar.especialidade }}</li>
+                        </ul>
+                    </div>
+                    <div class="utente">
+                        <h2>Visite a ficha médica dos seus familiares</h2>
                     {% for utente in utentes_familiares %}
                         <li>
-                            <a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} : {{ utente.primeiro_nome }} {{ utente.apelido }} </a>
+                            <button class= "botao" onclick="window.location='{% url 'hospital:utente' utente.id %}'">{{ utente.nome }} : {{ utente.primeiro_nome }} {{ utente.apelido }}</button>
                         </li>
+                    
+                    </div>
+                </div>
                     {% endfor %}
                 {% elif consultas_enfermeiro %}
                     {% for consulta in consultas_enfermeiro %}
