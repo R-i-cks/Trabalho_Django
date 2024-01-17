@@ -102,37 +102,31 @@ class ListaConsultas(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     def get_queryset(self):
         return Consulta.objects.all()
 
-
 def add_consulta(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ConsultaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("hospital:auxiliar", id=1)
+            return redirect('hospital:auxiliar', id=1)
     else:
         form = ConsultaForm()
-    return render(request, "hospital/add_consulta.html", {"form": form})
-
-
+    return render(request, 'hospital/add_consulta.html', {'form': form})
 def add_utente(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = UtenteForm(request.POST)
         if form.is_valid():
             grupo_utentes, _ = Group.objects.get_or_create(name="Utente")
             form.save()
-            username = form.cleaned_data["nome"]
-            password = "password"
-            email = form.cleaned_data["email"]
-            user = User.objects.create_user(
-                username=username, email=email, password=password
-            )
+            username = form.cleaned_data['nome']
+            password = 'password'
+            email = form.cleaned_data['email']
+            user =  User.objects.create_user(username=username,email=email, password=password)
             user.groups.add(grupo_utentes)
             user.save()
-            return redirect("hospital:auxiliar", id=1)
+            return redirect('hospital:auxiliar', id=1)
     else:
         form = UtenteForm()
-    return render(request, "hospital/add_consulta.html", {"form": form})
-
+    return render(request, 'hospital/add_consulta.html', {'form': form})
 
 class ListaUtentes(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     template_name = "hospital/index.html"
@@ -148,52 +142,43 @@ class ListaUtentes(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     def get_queryset(self):
         return Utentes.objects.all()
 
-
 def add_medico(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = MedicoForm(request.POST)
         if form.is_valid():
             grupo_medicos, _ = Group.objects.get_or_create(name="Medico")
             grupo_profissionais, _ = Group.objects.get_or_create(name="Profissional")
             form.save()
-            username = form.cleaned_data["nome"]
-            password = "password"
-            email = form.cleaned_data["email"]
-            user = User.objects.create_user(
-                username=username, email=email, password=password
-            )
+            username = form.cleaned_data['nome']
+            password = 'password'
+            email = form.cleaned_data['email']
+            user =  User.objects.create_user(username=username,email=email, password=password)
             user.groups.add(grupo_medicos, grupo_profissionais)
             user.save()
-            return redirect("hospital:auxiliar", id=1)
+            return redirect('hospital:auxiliar', id=1)
     else:
         form = MedicoForm()
-    return render(request, "hospital/add_consulta.html", {"form": form})
-
-
+    return render(request, 'hospital/add_consulta.html', {'form': form})
 def add_enfermeiro(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = EnfermeiroForm(request.POST)
         if form.is_valid():
             grupo_enfermeiros, _ = Group.objects.get_or_create(name="Enfermeiro")
             grupo_profissionais, _ = Group.objects.get_or_create(name="Profissional")
             form.save()
-            username = form.cleaned_data["nome"]
-            password = "password"
-            email = form.cleaned_data["email"]
-            user = User.objects.create_user(
-                username=username, email=email, password=password
-            )
+            username = form.cleaned_data['nome']
+            password = 'password'
+            email = form.cleaned_data['email']
+            user =  User.objects.create_user(username=username,email=email, password=password)
             user.groups.add(grupo_enfermeiros, grupo_profissionais)
             user.save()
             form.save()
-            return redirect("hospital:auxiliar", id=1)
+            return redirect('hospital:auxiliar', id=1)
     else:
         form = EnfermeiroForm()
-    return render(request, "hospital/add_consulta.html", {"form": form})
-
-
+    return render(request, 'hospital/add_consulta.html', {'form': form})
 def add_medicamento(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = MedicamentoForm(request.POST)
         if form.is_valid():
             form.save()
@@ -237,18 +222,19 @@ def add_prescricao(request, consulta_id, medico_id, utente_id):
             prescricao.save()
             consulta.prescricoes.add(prescricao)
             consulta.save()
-            return redirect("hospital:medico", id=medico.id)
+            return redirect('hospital:medico',id=medico.id)
     else:
         form = PrescricoesForm()
-    return render(request, "hospital/add_consulta.html", {"form": form})
-
-
-def add_medicao(request, consulta_id, medico_id, utente_id):
-    medico = get_object_or_404(Medico, pk=medico_id)
+    return render(request, 'hospital/add_consulta.html', {'form': form})
+def add_medicao(request,consulta_id,prof, profissional_id, utente_id):
+    if prof=="medico":
+        profissional = get_object_or_404(Medico, pk=profissional_id)
+    else:
+        profissional = get_object_or_404(Enfermeiro, pk=profissional_id)
     utente = get_object_or_404(Utente, pk=utente_id)
-    consulta = get_object_or_404(Consulta, pk=consulta_id)
+    consulta = get_object_or_404(Consulta,pk=consulta_id)
 
-    if request.method == "POST":
+    if request.method == 'POST':
         form = MedicoesForm(request.POST)
         if form.is_valid():
             medicao = form.save(commit=False)
@@ -263,14 +249,13 @@ def add_medicao(request, consulta_id, medico_id, utente_id):
             if prof == "medico":
                 return redirect("hospital:medico", id=profissional.id)
             else:
-                return redirect("hospital:enfermeiro", id=profissional.id)
+                return redirect('hospital:utente', id=profissional.id)
     else:
         form = MedicoesForm()
-    return render(request, "hospital/add_consulta.html", {"form": form})
+    return render(request, 'hospital/add_consulta.html', {'form': form})
 
-
-def add_exame(request, consulta_id, prof, profissional_id, utente_id):
-    if prof == "medico":
+def add_exame(request,consulta_id,prof, profissional_id, utente_id):
+    if prof=="medico":
         profissional = get_object_or_404(Medico, pk=profissional_id)
     else:
         profissional = get_object_or_404(Enfermeiro, pk=profissional_id)
@@ -292,7 +277,7 @@ def add_exame(request, consulta_id, prof, profissional_id, utente_id):
             if prof == "medico":
                 return redirect("hospital:medico", id=profissional.id)
             else:
-                return redirect("hospital:enfermeiro", id=profissional.id)
+                return redirect('hospital:utente', id=profissional.id)
     else:
         form = ExamesForm()
     return render(request, "hospital/add_consulta.html", {"form": form})
@@ -611,6 +596,7 @@ class EstatisticaView(generic.ListView):
             if conta_exames[elem] > maior:
                 maior = conta_exames[elem]
                 chave3 = elem  # exame mais prescrito
+
 
         context["total_users"] = pessoas
         context["n_homens"] = homens

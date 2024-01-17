@@ -157,11 +157,7 @@
                             {% endfor %}
                         </table> 
 
-                        {% for familiar in familiares %}
-                            <li>
-                                <a href="{% url 'hospital:familiar' familiar.id %}">{{ familiar.nome }} : {{ familiar.primeiro_nome }} {{ familiar.apelido }} </a>
-                            </li>
-                        {% endfor %}
+
         
 
                         {% elif consultas %}
