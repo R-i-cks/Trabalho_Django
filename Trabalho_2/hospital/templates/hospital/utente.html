@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ficha de utente</title>
     {% load static %}
+    {% load custom_filters %}
     <link rel="stylesheet" href="{% static 'hospital/utente.css' %}">
 </head>
 <body>
@@ -53,6 +54,11 @@
                                     <li>{{ medicao.tipo }}: {{ medicao.valor }} {{ medicao.unidades }}</li>
                                 </ul>
                             {% endfor %}
+                        {% if user|is_enfermeiro%}
+                            <a href="{% url 'hospital:add_medicao'  consulta_id=consulta.id medico_id=consulta.medico.id utente_id=consulta.utente.id%}">
+                            <button >Adicionar Medicao </button>
+                            <a/>
+                        {% endif %}
                         <p class="exams-heading">Exames:</p>
                             {% for exame in consulta.exames.all %}
                                 <ul class="exams-list">
