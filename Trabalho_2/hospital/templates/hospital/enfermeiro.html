@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="title">
-            <h1 class="">Ficha de {{ consultas_enfermeiro.first.enfermeiro.primeiro_nome }}  {{ consultas_enfermeiro.first.enfermeiro.apelido }} <span class="badge">{{user.groups.first}} </span> </h1>
+            <h1 class="">Ficha de {{ enfermeiro.primeiro_nome }}  {{ enfermeiro.apelido }} <span class="badge">{{user.groups.first}} </span> </h1>
             <div class="actions">
                 <form method="post" action="{% url 'hospital:logout' %}">
                     {% csrf_token %}
@@ -21,12 +21,11 @@
         <div class="content">
             <div class="enfermeiro-info">
                 <ul>
-                    <li><strong>Nome:</strong> {{ consultas_enfermeiro.utente.primeiro_nome }}</li>
-                    <li><strong>Data de Nascimento:</strong> {{ consultas_enfermeiro.first.enfermeiro.data_nascimento }}</li>
-                    <li><strong>Género:</strong> {{ consultas_enfermeiro.first.enfermeiro.genero }}</li>
-                    <li><strong>Contacto:</strong> {{ consultas_enfermeiro.first.enfermeiro.telemovel }}</li>
-                    <li><strong>Email:</strong> {{ consultas_enfermeiro.first.enfermeiro.email }}</li>
-                    <li><strong>Especialidade:</strong> {{ consultas_enfermeiro.first.enfermeiro.especialidade }}</li>
+                    <li><strong>Nome:</strong> {{ enfermeiro.primeiro_nome }}</li>
+                    <li><strong>Data de Nascimento:</strong> {{ enfermeiro.data_nascimento }}</li>
+                    <li><strong>Género:</strong> {{ enfermeiro.genero }}</li>
+                    <li><strong>Contacto:</strong> {{ enfermeiro.telemovel }}</li>
+                    <li><strong>Email:</strong> {{ enfermeiro.email }}</li>
                 </ul>
                 <ul>
                         <form method="get" action="{% url 'hospital:utentes' %}">
@@ -36,6 +35,7 @@
                 </ul>
             </div>
             <ul class="consultation-list">
+                
                 {% for consulta in consultas_enfermeiro %}
                 
                     <li class="consultation-item">
@@ -43,18 +43,17 @@
                         <p class="unidade-saude">UPCS: {{ consulta.unidade_saude }}</p>
                         <p class="data-consulta">Data: {{ consulta.data }}</p>
                         <p class="prescription-heading">Prescrições:</p>
-                            {% for prescricao in consulta.prescricoes.all %}
-                                {% for medicamento in prescricao.medicamento.all %}
-                                    <ul class="prescription-list">
-                                        <li>Tomar {{ medicamento.nome }}, {{ prescricao.dose_diaria }} vezes ao dia |</li>
-                                        <li>Início da toma a: {{prescricao.inicio_toma}} |</li>
-                                        <li>Válida durante {{ prescricao.validade_prescricao }} meses |</li>
-                                    </ul>
-                                {% endfor %}
-                            {% endfor %}
+                        {% for prescricao in consulta.prescricoes.all %}
+                        <ul class="prescription-list">
+                            <li>Tomar {{ prescricao.medicamento.nome }}, {{ prescricao.dose_diaria }} vezes ao dia |</li>
+                            <li>Início da toma a: {{ prescricao.inicio_toma }} |</li>
+                            <li>Válida durante {{ prescricao.validade_prescricao }} meses |</li>
+                        </ul>
+                    {% endfor %}
+                    
                         <p class="measurements-heading">Medições:</p>
                         <div class="measurements-op">
-                            {% for medicao in consulta.enfermeiro.all %}
+                            {% for medicao in consulta.medicoes.all %}
                                 <ul class="measurements-list">
                                     <li>{{ medicao.tipo }}: {{ medicao.valor }} {{ medicao.unidades }}</li>
                                 </ul>
