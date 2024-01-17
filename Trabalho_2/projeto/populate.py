@@ -244,7 +244,7 @@ def run():
                 dose_diaria=random.randint(1, 7),
             )
             prescricao.save()
-            prescricao.medicamento.add(medicamento)
+            prescricao.medicamento = medicamento
             c.prescricoes.add(prescricao)
 
         # --------------------------------------------------
