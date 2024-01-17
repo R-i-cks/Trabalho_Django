@@ -39,67 +39,9 @@
                         </li>
                     {% endfor %}
       
-                {% elif dados  %}
-                <ul class="lista_links">
-                    <li><a href="{% url 'hospital:consultas' %}">Consultas</a>
-                        <a href="{% url 'hospital:add_consulta'%}">
-                        <button>Adicionar Consulta </button>
-                        <a/>
-                    <li><a href="{% url 'hospital:utentes' %}">Utentes</a>
-                        <a href="{% url 'hospital:add_utente'%}">
-                            <button >Adicionar Utente </button>
-                        <a/>
-                    </li>
-                    <li><a href="{% url 'hospital:medicos' %}">Médicos</a>
-                        <a href="{% url 'hospital:add_medico'%}">
-                            <button >Adicionar Medico </button>
-                        <a/>
-                    </li>
-                    <li><a href="{% url 'hospital:enfermeiros' %}">Enfermeiros</a>
-                        <a href="{% url 'hospital:add_enfermeiro'%}">
-                            <button >Adicionar Enfermeiro </button>
-                        <a/>
-                    </li>
-                    <li><a href="{% url 'hospital:medicamentos' %}">Medicamentos</a>
-                        <a href="{% url 'hospital:add_medicamento'%}">
-                            <button >Adicionar Medicamento </button>
-                        <a/>
-                    </li>
-                    <li><a href="{% url 'hospital:familiares' %}">Familiares</a>
-                        <a href="{% url 'hospital:add_familiar'%}">
-                            <button >Adicionar Familiar </button>
-                        <a/>
-                    </li>
-                </ul>
+                    
 
-                {% elif utentes %}
-                    <h2>Utentes </h2>
-                        <table>
-                            <tr>
-                            <th>ID do utente</th>
-                            <th>Nome</th>
-                            <th>Data de nascimento </th>
-                            <th>Genero</th>
-                            <th>Telemovel</th>
-                            <th>Email</th>
-                            <th>Contacto de emergência</th>
-                            <th>Seguro</th>
-                            </tr>
-
-                            {% for utente in utentes %}
-                                <tr>
-                                    <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} </td>
-                                    <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.primeiro_nome }} {{ utente.apelido }}</td>
-                                    <td><a>{{ utente.data_nascimento }}</td>
-                                    <td><a>{{ utente.genero }}</td>
-                                    <td><a>{{ utente.telemovel }}</td>
-                                    <td><a>{{ utente.email }}</td>
-                                    <td><a>{{ utente.contacto_emergencia }}</td>
-                                    <td><a>{{ utente.tem_seguro }}</td>
-                                </tr>
-                            {% endfor %}
-                        </table>
-
+ 
 
                 {% elif dados %}
                 <div class="grid-container">
@@ -114,7 +56,18 @@
                         <a class="grid-item"  href="{% url 'hospital:medicos' %}">
                             <i class="menu-icon fa-solid fa-user-doctor fa-2xl" ></i>
                             Médicos
+                        
+                        
+                        <a class="grid-item2" href="{% url 'hospital:add_consulta'%}">
+                            <i class="fa-solid fa-plus" style="  color: #db6e14; margin-right: 5px"></i>Consulta
                         </a>
+                        <a class="grid-item2" href="{% url 'hospital:add_utente'%}"> 
+                            <i class="fa-solid fa-plus" style="  color: #db6e14; margin-right: 5px"></i>Utente
+                        </a> 
+                        <a class="grid-item2" href="{% url 'hospital:add_medico'%}">
+                            <i class="fa-solid fa-plus" style="  color: #db6e14; margin-right: 5px"></i> Médico
+                        </a>  
+
                         <a class="grid-item" href="{% url 'hospital:enfermeiros' %}">
                             <i class="menu-icon fa-solid fa-syringe fa-2xl" ></i>
                             Enfermeiros
@@ -127,185 +80,185 @@
                             <i class="menu-icon fa-solid fa-people-roof fa-2xl" ></i>
                             Familiares
                         </a>
+
+                        <a class="grid-item2" href="{% url 'hospital:add_enfermeiro'%}"> 
+                            <i class="fa-solid fa-plus" style="  color: #db6e14; margin-right: 5px"></i>Enfermeiro
+                        </a> 
+                        <a class="grid-item2" href="{% url 'hospital:add_medicamento'%}"> 
+                            <i class="fa-solid fa-plus" style="  color: #db6e14; margin-right: 5px"></i>Medicamento
+                        </a>  
+                        <a class="grid-item2" href="{% url 'hospital:add_familiar'%}"> 
+                            <i class="fa-solid fa-plus" style="  color: #db6e14; margin-right: 5px"></i>Familiar
+                        </a>  
                 </div>
-
-
-
-
-
+    
                 {% elif medicos %}
-                <h2>Médicos </h2>
-                    <table>
-                        <tr>
-                        <th>ID do medico</th>
-                        <th>Nome</th>
-                        <th>Data de nascimento </th>
-                        <th>Genero</th>
-                        <th>Telemovel</th>
-                        <th>Email</th>
-                        </tr>
-                    
-                        {% for medico in medicos %}
+                    <h2>Médicos </h2>
+                        <table>
                             <tr>
-                                <td><a href="{% url 'hospital:medico' medico.id %}">{{ medico.nome }} </a></td>
-                                <td><a href="{% url 'hospital:medico' medico.id %}">{{ medico.primeiro_nome }} {{ medico.apelido }}></a></td>
-                                <td><a>{{ medico.data_nascimento }}</a></td>
-                                <td><a>{{ medico.genero }}</a></td>
-                                <td><a>{{ medico.telemovel }}</a></td>
-                                <td><a>{{ medico.email }}</a></td>
-                            </tr>           
-                        {% endfor %}
-                    </table>        
-
-
-                {% elif familiares %}
-                <h2>Familiares </h2>
-                    <table>
-                        <tr>
-                        <th>ID do familiar</th>
-                        <th>Nome</th>
-                        <th>Data de nascimento </th>
-                        <th>Genero</th>
-                        <th>Telemovel</th>
-                        <th>Email</th>
-                        </tr>
-                    
-                        {% for familiar in familiares %}
-                            <tr>
-                                <td><a href="{% url 'hospital:familiar' familiar.id %}">{{familiar.nome }} </a></td>
-                                <td><a href="{% url 'hospital:familiar' familiar.id %}">{{familiar.primeiro_nome }} {{familiar.apelido }}</a></td>
-                                <td><a>{{familiar.data_nascimento }}</a></td>
-                                <td><a>{{familiar.genero }}</a></td>
-                                <td><a>{{familiar.telemovel }}</a></td>
-                                <td><a>{{familiar.email }}</a></td>
-                            </tr>           
-                        {% endfor %}
-                    </table> 
-
-                    {% for familiar in familiares %}
-                        <li>
-                            <a href="{% url 'hospital:familiar' familiar.id %}">{{ familiar.nome }} : {{ familiar.primeiro_nome }} {{ familiar.apelido }} </a>
-                        </li>
-                    {% endfor %}
-
-
-
-                {% elif consultas %}
-                <h2>Consultas </h2>
-  
-                    <table>
-                        <tr>
-                        <th>ID do utente</th>
-                        <th>Nome</th>
-                        <th>Médico</th>
-                        <th>Data</th>
-                        <th>UPCS</th>
-                        </tr>
-                    
-                        {% for consulta in consultas %}    
-                        <tr>
-                            <td><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} </a></td>
-                            <td><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }}</a></td>
-                            <td><a href="{% url 'hospital:medico' consulta.medico.id %}">{{ consulta.medico.primeiro_nome }} {{ consulta.medico.apelido }}</a></td>
-                            <td>{{ consulta.data }}</td>
-                            <td>{{ consulta.unidade_saude }}</td>
-                        </tr>           
-                        {% endfor %}
-                    </table>
-
-
-
-
-                {% elif utentes %}
-                <h2>Utentes </h2>
-                    <table>
-                        <tr>
-                        <th>ID do utente</th>
-                        <th>Nome</th>
-                        <th>Data de nascimento </th>
-                        <th>Genero</th>
-                        <th>Telemovel</th>
-                        <th>Email</th>
-                        <th>Contacto de emergência</th>
-                        <th>Seguro</th>
-                        </tr>
-                    
-                        {% for utente in utentes %}
-                            <tr>
-                                <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} </a></td>
-                                <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.primeiro_nome }} {{ utente.apelido }}</a></td>
-                                <td><a>{{ utente.data_nascimento }}</a></td>
-                                <td><a>{{ utente.genero }}</a></td>
-                                <td><a>{{ utente.telemovel }}</a></td>
-                                <td><a>{{ utente.email }}</a></td>
-                                <td><a>{{ utente.contacto_emergencia }}</a></td>
-                                <td><a>{{ utente.tem_seguro }}</a></td>
-                            </tr>           
-                        {% endfor %}
-                    </table>
-                 
-                
-                {% elif enfermeiros %}
-                <h2>Enfermeiros</h2>
-                    <table>
-                        <tr>
-                        <th>ID do enfermeiro</th>
-                        <th>Nome</th>
-                        <th>Data de nascimento </th>
-                        <th>Genero</th>
-                        <th>Telemovel</th>
-                        <th>Email</th>
-                        </tr>
-                    
-                        {% for enfermeiro in enfermeiros %}
-                            <tr>
-                                <td><a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.nome }} </a></td>
-                                <td><a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.primeiro_nome }} {{ enfermeiro.apelido }}</a></td>
-                                <td><a>{{ enfermeiro.data_nascimento }}</a></td>
-                                <td><a>{{ enfermeiro.genero }}</a></td>
-                                <td><a>{{ enfermeiro.telemovel }}</a></td>
-                                <td><a>{{ enfermeiro.email }}</a></td>
-                            </tr>           
-                        {% endfor %}
-                    </table>
-             
-
-                {% elif medicamentos %}
-                <h2>Medicamentos</h2>
-                <table>
-                    <tr>
-                        <th>Nome do medicamento</th>
-                        <th>Dosagem</th>
-                        <th>Fabricante</th>
-                        <th>Prescrição necessária</th>
-                    </tr>
+                            <th>ID do medico</th>
+                            <th>Nome</th>
+                            <th>Data de nascimento </th>
+                            <th>Genero</th>
+                            <th>Telemovel</th>
+                            <th>Email</th>
+                            </tr>
                         
-                    {% for medicamento in medicamentos %}    
-                        <tr>
-                            <td><a href="{% url 'hospital:medicamento' medicamento.id %}">{{ medicamento.nome }} </a></td>
-                            <td><a href="{% url 'hospital:medicamento' medicamento.id %}"> {{ medicamento.dosagem }} </a></td>
-                            <td><a href="{% url 'hospital:medicamento' medicamento.id %}"> {{ medicamento.fabricante }} </a></td>
-                            <td><a href="{% url 'hospital:medicamento' medicamento.id %}"> {{ medicamento.precisa_prescricao }} </a></td>
+                            {% for medico in medicos %}
+                                <tr>
+                                    <td><a href="{% url 'hospital:medico' medico.id %}">{{ medico.nome }} </td>
+                                    <td><a href="{% url 'hospital:medico' medico.id %}">{{ medico.primeiro_nome }} {{ medico.apelido }}</td>
+                                    <td><a>{{ medico.data_nascimento }}</td>
+                                    <td><a>{{ medico.genero }}</td>
+                                    <td><a>{{ medico.telemovel }}</td>
+                                    <td><a>{{ medico.email }}</td>
+                                </tr>           
+                            {% endfor %}
+                        </table>        
+
+             
+                {% elif familiares %}
+                    <h2>Familiares </h2>
+                        <table>
+                            <tr>
+                            <th>ID do familiar</th>
+                            <th>Nome</th>
+                            <th>Data de nascimento </th>
+                            <th>Genero</th>
+                            <th>Telemovel</th>
+                            <th>Email</th>
+                            </tr>
+                        
+                            {% for familiar in familiares %}
+                                <tr>
+                                    <td><a href="{% url 'hospital:familiar' familiar.id %}">{{familiar.nome }} </td>
+                                    <td><a href="{% url 'hospital:familiar' familiar.id %}">{{familiar.primeiro_nome }} {{familiar.apelido }}</td>
+                                    <td><a>{{familiar.data_nascimento }}</td>
+                                    <td><a>{{familiar.genero }}</td>
+                                    <td><a>{{familiar.telemovel }}</td>
+                                    <td><a>{{familiar.email }}</td>
+                                </tr>           
+                            {% endfor %}
+                        </table> 
+
+                        {% for familiar in familiares %}
+                            <li>
+                                <a href="{% url 'hospital:familiar' familiar.id %}">{{ familiar.nome }} : {{ familiar.primeiro_nome }} {{ familiar.apelido }} </a>
+                            </li>
+                        {% endfor %}
+        
+
+                        {% elif consultas %}
+                        <h2>Consultas </h2>
+          
+                            <table>
+                                <tr>
+                                <th>ID do utente</th>
+                                <th>Nome</th>
+                                <th>Médico</th>
+                                <th>Data</th>
+                                <th>UPCS</th>
+                                </tr>
                             
-                        </tr>           
-                    {% endfor %}
-                 </table>
-
-
-               {% else %}
-                    <p>Não há dados a mostrar</p>
-               {% endif %}
-            </ul>
-        </div>
-        <div class="footnote">
-            <p>Developed by Ricardo, Monica & Dinis</p>
-        </div>
-    </div>
-<script>
-    function toggleForm(formClassName) {
-        var form = document.querySelector('.' + formClassName);
-        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
-    }
-</script>
-</body>
-</html>
+                                {% for consulta in consultas %}    
+                                <tr>
+                                    <td><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} </td>
+                                    <td><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }}</td>
+                                    <td><a href="{% url 'hospital:medico' consulta.medico.id %}">{{ consulta.medico.primeiro_nome }} {{ consulta.medico.apelido }}</td>
+                                    <td>{{ consulta.data }}</td>
+                                    <td>{{ consulta.unidade_saude }}</td>
+                                </tr>           
+                                {% endfor %}
+                            </table>
+        
+        
+        
+        
+                        {% elif utentes %}
+                        <h2>Utentes </h2>
+                            <table>
+                                <tr>
+                                <th>ID do utente</th>
+                                <th>Nome</th>
+                                <th>Data de nascimento </th>
+                                <th>Genero</th>
+                                <th>Telemovel</th>
+                                <th>Email</th>
+                                <th>Contacto de emergência</th>
+                                <th>Seguro</th>
+                                </tr>
+                            
+                                {% for utente in utentes %}
+                                    <tr>
+                                        <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} </td>
+                                        <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.primeiro_nome }} {{ utente.apelido }}</td>
+                                        <td><a>{{ utente.data_nascimento }}</td>
+                                        <td><a>{{ utente.genero }}</td>
+                                        <td><a>{{ utente.telemovel }}</td>
+                                        <td><a>{{ utente.email }}</td>
+                                        <td><a>{{ utente.contacto_emergencia }}</td>
+                                        <td><a>{{ utente.tem_seguro }}</td>
+                                    </tr>           
+                                {% endfor %}
+                            </table>
+                         
+                        
+                        {% elif enfermeiros %}
+                        <h2>Enfermeiros</h2>
+                            <table>
+                                <tr>
+                                <th>ID do enfermeiro</th>
+                                <th>Nome</th>
+                                <th>Data de nascimento </th>
+                                <th>Genero</th>
+                                <th>Telemovel</th>
+                                <th>Email</th>
+                                </tr>
+                            
+                                {% for enfermeiro in enfermeiros %}
+                                    <tr>
+                                        <td><a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.nome }} </td>
+                                        <td><a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.primeiro_nome }} {{ enfermeiro.apelido }}</td>
+                                        <td><a>{{ enfermeiro.data_nascimento }}</td>
+                                        <td><a>{{ enfermeiro.genero }}</td>
+                                        <td><a>{{ enfermeiro.telemovel }}</td>
+                                        <td><a>{{ enfermeiro.email }}</td>
+                                    </tr>           
+                                {% endfor %}
+                            </table>
+                     
+        
+                        {% elif medicamentos %}
+                        <h2>Medicamentos</h2>
+                        <table>
+                            <tr>
+                                <th>Nome do medicamento</th>
+                                <th>Dosagem</th>
+                                <th>Fabricante</th>
+                                <th>Prescrição necessária</th>
+                            </tr>
+                                
+                            {% for medicamento in medicamentos %}    
+                                <tr>
+                                    <td><a href="{% url 'hospital:medicamento' medicamento.id %}">{{ medicamento.nome }} </a></td>
+                                    <td><a href="{% url 'hospital:medicamento' medicamento.id %}"> {{ medicamento.dosagem }} </a></td>
+                                    <td><a href="{% url 'hospital:medicamento' medicamento.id %}"> {{ medicamento.fabricante }} </a></td>
+                                    <td><a href="{% url 'hospital:medicamento' medicamento.id %}"> {{ medicamento.precisa_prescricao }} </a></td>
+                                    
+                                </tr>           
+                            {% endfor %}
+                         </table>
+        
+        
+                       {% else %}
+                            <p>Não há dados a mostrar</p>
+                       {% endif %}
+                    </ul>
+                </div>
+                <div class="footnote">
+                    <p>Developed by Ricardo, Monica & Dinis</p>
+                </div>
+            </div>
+        </body>
+        </html>
+        
