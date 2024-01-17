@@ -39,41 +39,19 @@
                         </li>
                     {% endfor %}
       
-                {% elif dados  %}
-                <ul class="lista_links">
-                    <li><a href="{% url 'hospital:consultas' %}">Consultas</a>
-                        <a href="{% url 'hospital:add_consulta'%}">
-                        <button>Adicionar Consulta </button>
-                        <a/>
-                    <li><a href="{% url 'hospital:utentes' %}">Utentes</a>
-                        <a href="{% url 'hospital:add_utente'%}">
-                            <button >Adicionar Utente </button>
-                        <a/>
-                    </li>
-                    <li><a href="{% url 'hospital:medicos' %}">Médicos</a>
-                        <a href="{% url 'hospital:add_medico'%}">
-                            <button >Adicionar Medico </button>
-                        <a/>
-                    </li>
-                    <li><a href="{% url 'hospital:enfermeiros' %}">Enfermeiros</a>
-                        <a href="{% url 'hospital:add_enfermeiro'%}">
-                            <button >Adicionar Enfermeiro </button>
-                        <a/>
-                    </li>
-                    <li><a href="{% url 'hospital:medicamentos' %}">Medicamentos</a>
-                        <a href="{% url 'hospital:add_medicamento'%}">
-                            <button >Adicionar Medicamento </button>
-                        <a/>
-                    </li>
-                    <li><a href="{% url 'hospital:familiares' %}">Familiares</a>
-                        <a href="{% url 'hospital:add_familiar'%}">
-                            <button >Adicionar Familiar </button>
-                        <a/>
-                    </li>
-                </ul>
+                    
 
                 {% elif utentes %}
-                    <h2>Utentes </h2>
+                    <div class="add">
+                        <div>
+                        <h2>Utentes </h2>
+                        </div>
+                        <div>
+                            <a href="{% url 'hospital:add_utente'%}">
+                            <i class="fa-solid fa-circle-plus fa-2xl" style="  color: #db6e14;"></i>
+                            </a>  
+                        </div>
+                    </div>
                         <table>
                             <tr>
                             <th>ID do utente</th>
@@ -134,7 +112,16 @@
 
 
                 {% elif medicos %}
-                <h2>Médicos </h2>
+                    <div class="add">
+                        <div>
+                        <h2>Médicos</h2>
+                        </div>
+                        <div>
+                            <a href="{% url 'hospital:add_medico'%}">
+                            <i class="fa-solid fa-circle-plus fa-2xl" style="  color: #db6e14;"></i>
+                            </a>  
+                        </div>
+                    </div>
                     <table>
                         <tr>
                         <th>ID do medico</th>
@@ -159,7 +146,16 @@
 
 
                 {% elif familiares %}
-                <h2>Familiares </h2>
+                <div class="add">
+                    <div>
+                    <h2>Familiares </h2>
+                    </div>
+                    <div>
+                        <a href="{% url 'hospital:add_familiar'%}">
+                        <i class="fa-solid fa-circle-plus fa-2xl" style="  color: #db6e14;"></i>
+                        </a>  
+                    </div>
+                </div>
                     <table>
                         <tr>
                         <th>ID do familiar</th>
@@ -191,8 +187,17 @@
 
 
                 {% elif consultas %}
-                <h2>Consultas </h2>
-  
+                    <div class="add">
+                        <div>
+                        <h2>Consultas </h2>
+                        </div>
+                        <div>
+                            <a href="{% url 'hospital:add_consulta'%}">
+                            <i class="fa-solid fa-circle-plus fa-2xl" style="  color: #db6e14;"></i>
+                            </a>  
+                        </div>
+                    </div>
+                    
                     <table>
                         <tr>
                         <th>ID do utente</th>
@@ -214,39 +219,17 @@
                     </table>
 
 
-
-
-                {% elif utentes %}
-                <h2>Utentes </h2>
-                    <table>
-                        <tr>
-                        <th>ID do utente</th>
-                        <th>Nome</th>
-                        <th>Data de nascimento </th>
-                        <th>Genero</th>
-                        <th>Telemovel</th>
-                        <th>Email</th>
-                        <th>Contacto de emergência</th>
-                        <th>Seguro</th>
-                        </tr>
-                    
-                        {% for utente in utentes %}
-                            <tr>
-                                <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} </a></td>
-                                <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.primeiro_nome }} {{ utente.apelido }}</a></td>
-                                <td><a>{{ utente.data_nascimento }}</a></td>
-                                <td><a>{{ utente.genero }}</a></td>
-                                <td><a>{{ utente.telemovel }}</a></td>
-                                <td><a>{{ utente.email }}</a></td>
-                                <td><a>{{ utente.contacto_emergencia }}</a></td>
-                                <td><a>{{ utente.tem_seguro }}</a></td>
-                            </tr>           
-                        {% endfor %}
-                    </table>
-                 
-                
                 {% elif enfermeiros %}
-                <h2>Enfermeiros</h2>
+                <div class="add">
+                    <div>
+                    <h2>Enfermeiros </h2>
+                    </div>
+                    <div>
+                        <a href="{% url 'hospital:add_enfermeiro'%}">
+                        <i class="fa-solid fa-circle-plus fa-2xl" style="  color: #db6e14;"></i>
+                        </a>  
+                    </div>
+                </div>
                     <table>
                         <tr>
                         <th>ID do enfermeiro</th>
@@ -271,7 +254,16 @@
              
 
                 {% elif medicamentos %}
-                <h2>Medicamentos</h2>
+                <div class="add">
+                    <div>
+                    <h2>Medicamentos</h2>
+                    </div>
+                    <div>
+                        <a href="{% url 'hospital:add_medicamento'%}">
+                        <i class="fa-solid fa-circle-plus fa-2xl" style="  color: #db6e14;"></i>
+                        </a>  
+                    </div>
+                </div>
                 <table>
                     <tr>
                         <th>Nome do medicamento</th>
