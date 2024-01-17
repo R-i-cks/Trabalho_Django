@@ -1,6 +1,6 @@
 from django.db import models
 from django import forms
-
+from datetime import datetime
 
 class Pessoa(models.Model):
     nome = models.CharField(max_length=40, unique=True) # usado como username
@@ -10,8 +10,17 @@ class Pessoa(models.Model):
     genero = models.CharField(max_length=20,default="")
     telemovel = models.IntegerField(default="")
     email = models.CharField(max_length=60,default="")
+
+
+    def idade(self):
+        today = datetime.today()
+        age = today.year - self.data_nascimento.year - ((today.month, today.day) < (self.data_nascimento.month, self.data_nascimento.day))
+        return age
+
     class Meta:
         abstract = True     # Comporta-se como um extends, contudo a tabela pessoa não é criada
+
+
 
 class Utente(Pessoa):
     contacto_emergencia = models.IntegerField(default=0)
@@ -89,6 +98,8 @@ class Prescricoes(models.Model):
     inicio_toma = models.DateTimeField(null=True)
     validade_prescricao = models.IntegerField(default=0)
     dose_diaria = models.IntegerField(default=0)
+
+
 
 class PrescricoesForm(forms.ModelForm):
     class Meta:

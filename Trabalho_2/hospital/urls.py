@@ -6,6 +6,7 @@ from .views import (
     ListaEnfermeirosView,
     ListaMedicamentosView,
     ListaFamiliaresView,
+    EstatisticaView
 )
 
 from . import views
@@ -33,8 +34,9 @@ urlpatterns = [
     path('add_medicamento/', views.add_medicamento, name='add_medicamento'),
     path('add_familiar/', views.add_familiar, name='add_familiar'),
     path('add_prescricao/<int:consulta_id>/<int:medico_id>/<int:utente_id>/', views.add_prescricao, name='add_prescricao'),
-    path('add_medicao/<int:consulta_id>/<int:medico_id>/<int:utente_id>/', views.add_medicao, name='add_medicao'),
-    path('add_exame/<int:consulta_id>/<int:medico_id>/<int:utente_id>/', views.add_exame, name='add_exame'),
+    path('add_medicao/<int:consulta_id>/<str:prof>/<int:profissional_id>/<int:utente_id>/', views.add_medicao, name='add_medicao'),
+    path('add_exame/<int:consulta_id>/<str:prof>/<int:profissional_id>/<int:utente_id>/', views.add_exame, name='add_exame'),
+    path('estatisticas/', EstatisticaView.as_view(), name='estatisticas'),
 
     path("logout/", views.logout_view, name="logout"),
 ]

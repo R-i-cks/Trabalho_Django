@@ -506,3 +506,85 @@ class ListaMedicamentosView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Medicamento.objects.all()
+
+
+class EstatisticaView(LoginRequiredMixin, generic.ListView):
+    template_name = "stats.html"
+
+    login_url = "hospital:user_login"
+
+    def get_context_data(self, **kwargs):
+        context = {}
+        pessoas = Utente.objects.all()
+        homens = pessoas.filter(genero="M")
+        mulheres = pessoas.filter(genero="F")
+
+        soma = 0
+        i=0
+        for pessoa in pessoas:
+            i+=1
+            soma += pessoa.idade()
+        media = soma / i
+
+        prescricoes = Prescricoes.objects.all()
+        presc_med = {}
+
+        for prescricao in prescricoes:
+            if prescricao.medicamento.nome in presc_med.keys():
+                presc_med[prescricao.medicamento.nome] += 1
+            else:
+                presc_med[prescricao.medicamento.nome] = 1
+
+        maior = -10
+        chave1 = ""
+        for elem in presc_med.keys():
+            if presc_med[elem] > maior:
+                maior = presc_med[elem]
+                chave1 = elem  # medicamento mais prescrito
+
+        p_medicos = {}
+
+        for prescricao in prescricoes:
+            if prescricao.medicamento.medico in p_medicos.keys():
+                p_medicos[prescricao.medicamento.medico] += 1
+            else:
+                p_medicos[prescricao.medicamento.medicos] = 1
+
+        maior = -10
+        chave2 = ""
+        for elem in p_medicos.keys():
+            if p_medicos[elem] > maior:
+                maior = p_medicos[elem]
+                chave2 = elem  # medico c +  prescricoes
+
+        exames = Exame.objects.all()
+
+        conta_exames = {}
+
+        for exame in exames:
+            if exame.nome_exame in conta_exames.keys():
+                conta_exames[exame.nome_exame] += 1
+            else:
+                conta_exames[exame.nome_exame] = 1
+
+        maior = -10
+        chave3 = ""
+        for elem in conta_exames.keys():
+            if conta_exames[elem] > maior:
+                maior = conta_exames[elem]
+                chave3 = elem  # exame mais prescrito
+
+
+        context["total_users"] = pessoas
+        context["n_homens"] = homens
+        context["n_mulheres"] = mulheres
+        context["idade_media"] = media
+        context["medicamento_mais_p"] = chave1
+        context["medico_mais_p"] = chave2
+        context["exame_mais_p"] = chave3
+
+        return context
+
+    def get(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return render(request, self.template_name, context)
