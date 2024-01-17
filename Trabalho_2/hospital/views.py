@@ -1,18 +1,15 @@
 from django.contrib import messages
-from django.db.models import Count
 from django.views import generic
-from django.utils import timezone
 from django.views.decorators.http import require_POST
 
+
 from .models import *
-from django.urls import reverse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.http import HttpResponse, HttpResponseForbidden
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User, Group
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.views import LoginView
 
 
 def home(request):
@@ -105,6 +102,24 @@ class ListaConsultas(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     def get_queryset(self):
         return Consulta.objects.all()
 
+def add_consulta(request):
+    if request.method == 'POST':
+        form = ConsultaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:auxiliar', id=1)
+    else:
+        form = ConsultaForm()
+    return render(request, 'hospital/add_consulta.html', {'form': form})
+def add_utente(request):
+    if request.method == 'POST':
+        form = UtenteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:auxiliar', id=1)
+    else:
+        form = UtenteForm()
+    return render(request, 'hospital/add_consulta.html', {'form': form})
 
 class ListaUtentes(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     template_name = "hospital/index.html"
@@ -120,6 +135,42 @@ class ListaUtentes(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     def get_queryset(self):
         return Utentes.objects.all()
 
+def add_medico(request):
+    if request.method == 'POST':
+        form = MedicoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:auxiliar', id=1)
+    else:
+        form = MedicoForm()
+    return render(request, 'hospital/add_consulta.html', {'form': form})
+def add_enfermeiro(request):
+    if request.method == 'POST':
+        form = EnfermeiroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:auxiliar', id=1)
+    else:
+        form = EnfermeiroForm()
+    return render(request, 'hospital/add_consulta.html', {'form': form})
+def add_medicamento(request):
+    if request.method == 'POST':
+        form = MedicamentoForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:auxiliar', id=1)
+    else:
+        form = MedicamentoForm()
+    return render(request, 'hospital/add_consulta.html', {'form': form})
+def add_familiar(request):
+    if request.method == 'POST':
+        form = FamiliarForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('hospital:auxiliar', id=1)
+    else:
+        form = FamiliarForm()
+    return render(request, 'hospital/add_consulta.html', {'form': form})
 
 class UtenteView(LoginRequiredMixin, UserPassesTestMixin, generic.DetailView):
     model = Consulta

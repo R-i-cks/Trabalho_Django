@@ -1,5 +1,5 @@
 from django.db import models
-# Create your models here.
+from django import forms
 
 
 class Pessoa(models.Model):
@@ -20,14 +20,29 @@ class Utente(Pessoa):
     def __str__(self):
         return self.nome
 
+class UtenteForm(forms.ModelForm):
+    class Meta:
+        model = Utente
+        fields= ["nome","primeiro_nome","apelido","data_nascimento","genero", "telemovel","email", "contacto_emergencia", "tem_seguro"]
 class Medico(Pessoa):
     especialidade = models.CharField(max_length=40,default="")
     def __str__(self):
         return self.nome
 
+class MedicoForm(forms.ModelForm):
+    class Meta:
+        model = Medico
+        fields = ["nome", "primeiro_nome", "apelido", "data_nascimento", "genero", "telemovel", "email",
+                  "especialidade"]
+
 class Enfermeiro(Pessoa):
     def __str__(self):
         return self.nome
+
+class EnfermeiroForm(forms.ModelForm):
+    class Meta:
+        model = Enfermeiro
+        fields= ["nome","primeiro_nome","apelido","data_nascimento","genero", "telemovel","email"]
 class Auxiliar(Pessoa):
     def __str__(self):
         return self.nome
@@ -35,6 +50,10 @@ class Auxiliar(Pessoa):
 class Familiar(Pessoa):
     utente = models.ManyToManyField(Utente)   # uma pessoa pode ser familiar de várias
 
+class FamiliarForm(forms.ModelForm):
+    class Meta:
+        model = Familiar
+        fields= ["nome","primeiro_nome","apelido","data_nascimento","genero", "telemovel","email","utente"]
 
 
 class Medicamento(models.Model):
@@ -45,6 +64,11 @@ class Medicamento(models.Model):
 
     def __str__(self):
         return self.nome
+
+class MedicamentoForm(forms.ModelForm):
+    class Meta:
+        model = Medicamento
+        fields= ["nome","dosagem", "fabricante", "precisa_prescricao"]
 class Medicoes(models.Model):
     utente = models.ForeignKey(Utente, on_delete=models.CASCADE)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE, null=True)
@@ -79,6 +103,8 @@ class Consulta(models.Model):
     prescricoes = models.ManyToManyField(Prescricoes)
     exames = models.ManyToManyField(Exame)
 
-
-
+class ConsultaForm(forms.ModelForm):
+    class Meta:
+        model = Consulta
+        fields = ['utente', 'medico', 'unidade_saude', 'data', 'medicoes', 'prescricoes', 'exames']
 

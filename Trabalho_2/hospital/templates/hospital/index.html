@@ -38,7 +38,40 @@
                             <a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} : {{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }} </a>
                         </li>
                     {% endfor %}
-                
+      
+                {% elif dados  %}
+                <ul class="lista_links">
+                    <li><a href="{% url 'hospital:consultas' %}">Consultas</a>
+                        <a href="{% url 'hospital:add_consulta'%}">
+                        <button>Adicionar Consulta </button>
+                        <a/>
+                    <li><a href="{% url 'hospital:utentes' %}">Utentes</a>
+                        <a href="{% url 'hospital:add_utente'%}">
+                            <button >Adicionar Utente </button>
+                        <a/>
+                    </li>
+                    <li><a href="{% url 'hospital:medicos' %}">Médicos</a>
+                        <a href="{% url 'hospital:add_medico'%}">
+                            <button >Adicionar Medico </button>
+                        <a/>
+                    </li>
+                    <li><a href="{% url 'hospital:enfermeiros' %}">Enfermeiros</a>
+                        <a href="{% url 'hospital:add_enfermeiro'%}">
+                            <button >Adicionar Enfermeiro </button>
+                        <a/>
+                    </li>
+                    <li><a href="{% url 'hospital:medicamentos' %}">Medicamentos</a>
+                        <a href="{% url 'hospital:add_medicamento'%}">
+                            <button >Adicionar Medicamento </button>
+                        <a/>
+                    </li>
+                    <li><a href="{% url 'hospital:familiares' %}">Familiares</a>
+                        <a href="{% url 'hospital:add_familiar'%}">
+                            <button >Adicionar Familiar </button>
+                        <a/>
+                    </li>
+                </ul>
+
                 {% elif utentes %}
                     <h2>Utentes </h2>
                         <table>
@@ -52,7 +85,7 @@
                             <th>Contacto de emergência</th>
                             <th>Seguro</th>
                             </tr>
-                        
+
                             {% for utente in utentes %}
                                 <tr>
                                     <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} </td>
@@ -63,10 +96,10 @@
                                     <td><a>{{ utente.email }}</td>
                                     <td><a>{{ utente.contacto_emergencia }}</td>
                                     <td><a>{{ utente.tem_seguro }}</td>
-                                </tr>           
+                                </tr>
                             {% endfor %}
                         </table>
-                 
+
 
                 {% elif dados %}
                 <div class="grid-container">
@@ -95,9 +128,9 @@
                             Familiares
                         </a>
                 </div>
-              
-                
-                
+
+
+
 
 
                 {% elif medicos %}
@@ -114,12 +147,12 @@
                     
                         {% for medico in medicos %}
                             <tr>
-                                <td><a href="{% url 'hospital:medico' medico.id %}">{{ medico.nome }} </td>
-                                <td><a href="{% url 'hospital:medico' medico.id %}">{{ medico.primeiro_nome }} {{ medico.apelido }}</td>
-                                <td><a>{{ medico.data_nascimento }}</td>
-                                <td><a>{{ medico.genero }}</td>
-                                <td><a>{{ medico.telemovel }}</td>
-                                <td><a>{{ medico.email }}</td>
+                                <td><a href="{% url 'hospital:medico' medico.id %}">{{ medico.nome }} </a></td>
+                                <td><a href="{% url 'hospital:medico' medico.id %}">{{ medico.primeiro_nome }} {{ medico.apelido }}></a></td>
+                                <td><a>{{ medico.data_nascimento }}</a></td>
+                                <td><a>{{ medico.genero }}</a></td>
+                                <td><a>{{ medico.telemovel }}</a></td>
+                                <td><a>{{ medico.email }}</a></td>
                             </tr>           
                         {% endfor %}
                     </table>        
@@ -139,12 +172,12 @@
                     
                         {% for familiar in familiares %}
                             <tr>
-                                <td><a href="{% url 'hospital:familiar' familiar.id %}">{{familiar.nome }} </td>
-                                <td><a href="{% url 'hospital:familiar' familiar.id %}">{{familiar.primeiro_nome }} {{familiar.apelido }}</td>
-                                <td><a>{{familiar.data_nascimento }}</td>
-                                <td><a>{{familiar.genero }}</td>
-                                <td><a>{{familiar.telemovel }}</td>
-                                <td><a>{{familiar.email }}</td>
+                                <td><a href="{% url 'hospital:familiar' familiar.id %}">{{familiar.nome }} </a></td>
+                                <td><a href="{% url 'hospital:familiar' familiar.id %}">{{familiar.primeiro_nome }} {{familiar.apelido }}</a></td>
+                                <td><a>{{familiar.data_nascimento }}</a></td>
+                                <td><a>{{familiar.genero }}</a></td>
+                                <td><a>{{familiar.telemovel }}</a></td>
+                                <td><a>{{familiar.email }}</a></td>
                             </tr>           
                         {% endfor %}
                     </table> 
@@ -171,9 +204,9 @@
                     
                         {% for consulta in consultas %}    
                         <tr>
-                            <td><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} </td>
-                            <td><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }}</td>
-                            <td><a href="{% url 'hospital:medico' consulta.medico.id %}">{{ consulta.medico.primeiro_nome }} {{ consulta.medico.apelido }}</td>
+                            <td><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.nome }} </a></td>
+                            <td><a href="{% url 'hospital:utente' consulta.utente.id %}">{{ consulta.utente.primeiro_nome }} {{ consulta.utente.apelido }}</a></td>
+                            <td><a href="{% url 'hospital:medico' consulta.medico.id %}">{{ consulta.medico.primeiro_nome }} {{ consulta.medico.apelido }}</a></td>
                             <td>{{ consulta.data }}</td>
                             <td>{{ consulta.unidade_saude }}</td>
                         </tr>           
@@ -199,14 +232,14 @@
                     
                         {% for utente in utentes %}
                             <tr>
-                                <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} </td>
-                                <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.primeiro_nome }} {{ utente.apelido }}</td>
-                                <td><a>{{ utente.data_nascimento }}</td>
-                                <td><a>{{ utente.genero }}</td>
-                                <td><a>{{ utente.telemovel }}</td>
-                                <td><a>{{ utente.email }}</td>
-                                <td><a>{{ utente.contacto_emergencia }}</td>
-                                <td><a>{{ utente.tem_seguro }}</td>
+                                <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.nome }} </a></td>
+                                <td><a href="{% url 'hospital:utente' utente.id %}">{{ utente.primeiro_nome }} {{ utente.apelido }}</a></td>
+                                <td><a>{{ utente.data_nascimento }}</a></td>
+                                <td><a>{{ utente.genero }}</a></td>
+                                <td><a>{{ utente.telemovel }}</a></td>
+                                <td><a>{{ utente.email }}</a></td>
+                                <td><a>{{ utente.contacto_emergencia }}</a></td>
+                                <td><a>{{ utente.tem_seguro }}</a></td>
                             </tr>           
                         {% endfor %}
                     </table>
@@ -226,12 +259,12 @@
                     
                         {% for enfermeiro in enfermeiros %}
                             <tr>
-                                <td><a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.nome }} </td>
-                                <td><a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.primeiro_nome }} {{ enfermeiro.apelido }}</td>
-                                <td><a>{{ enfermeiro.data_nascimento }}</td>
-                                <td><a>{{ enfermeiro.genero }}</td>
-                                <td><a>{{ enfermeiro.telemovel }}</td>
-                                <td><a>{{ enfermeiro.email }}</td>
+                                <td><a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.nome }} </a></td>
+                                <td><a href="{% url 'hospital:enfermeiro' enfermeiro.id %}">{{ enfermeiro.primeiro_nome }} {{ enfermeiro.apelido }}</a></td>
+                                <td><a>{{ enfermeiro.data_nascimento }}</a></td>
+                                <td><a>{{ enfermeiro.genero }}</a></td>
+                                <td><a>{{ enfermeiro.telemovel }}</a></td>
+                                <td><a>{{ enfermeiro.email }}</a></td>
                             </tr>           
                         {% endfor %}
                     </table>
@@ -268,5 +301,11 @@
             <p>Developed by Ricardo, Monica & Dinis</p>
         </div>
     </div>
+<script>
+    function toggleForm(formClassName) {
+        var form = document.querySelector('.' + formClassName);
+        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
+    }
+</script>
 </body>
 </html>

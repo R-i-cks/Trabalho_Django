@@ -26,5 +26,11 @@ urlpatterns = [
     path("enfermeiros/", ListaEnfermeirosView.as_view(), name="enfermeiros"),
     path("medicamentos/", ListaMedicamentosView.as_view(), name="medicamentos"),
     path("familiares/", ListaFamiliaresView.as_view(), name="familiares"),
+    path('add_consulta/', views.add_consulta, name='add_consulta'),
+    path('add_utente/', views.add_utente, name='add_utente'),
+    path('add_medico/', views.add_medico, name='add_medico'),
+    path('add_enfermeiro/', views.add_enfermeiro, name='add_enfermeiro'),
+    path('add_medicamento/', views.add_medicamento, name='add_medicamento'),
+    path('add_familiar/', views.add_familiar, name='add_familiar'),
     path("logout/", views.logout_view, name="logout"),
 ]
