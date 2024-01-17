@@ -348,6 +348,7 @@ class EnfermeiroView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
         enfermeiro = self.get_object()
         consultas_enfermeiro = Medicoes.objects.filter(enfermeiro=enfermeiro)
         context["consultas_enfermeiro"] = consultas_enfermeiro
+        context["enfermeiro"] = enfermeiro
         return context
 
 
@@ -376,6 +377,12 @@ class FamiliarView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
         familiar = self.get_object()
         lista_utentes = familiar.utente.all()
         return lista_utentes
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        familiar = self.get_object()
+        context["familiar"] = familiar
+        return context
 
 
 class AuxiliarView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
