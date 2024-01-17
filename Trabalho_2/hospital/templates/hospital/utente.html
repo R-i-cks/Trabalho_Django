@@ -39,13 +39,11 @@
                         <p class="data-consulta">Data: {{ consulta.data }}</p>
                         <p class="prescription-heading">Prescrições:</p>
                             {% for prescricao in consulta.prescricoes.all %}
-                                {% for medicamento in prescricao.medicamento.all %}
                                 <ul class="prescription-list">
-                                    <li>Tomar {{ medicamento.nome }}, {{prescricao.dose_diaria}} vezes ao dia |</li>
+                                    <li>Tomar {{ prescricao.medicamento.nome }}, {{prescricao.dose_diaria}} vezes ao dia |</li>
                                     <li>Início da toma a: {{prescricao.inicio_toma}} |</li>
                                     <li>Válida durante {{prescricao.validade_prescricao}} meses |</li>
                                 </ul>
-                                {% endfor %}
                             {% endfor %}
                         <p class="measurements-heading">Medições:</p>
                             {% for medicao in consulta.medicoes.all %}
