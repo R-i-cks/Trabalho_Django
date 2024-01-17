@@ -231,9 +231,12 @@ def run():
         # Prescrições
 
         for a in range(2):
-            medicamento = Medicamento.objects.get(pk=random.randint(1, 51))
+            medicamento = (
+                Medicamento.objects.all()
+                .filter(nome=f"medicamento {random.randint(0,50)}")
+                .first()
+            )
             prescricao = Prescricoes(
-                medicamento=medicamento,
                 utente=u,
                 medico=m,
                 inicio_toma=data_aleatoria(2023, 2024),
@@ -241,6 +244,7 @@ def run():
                 dose_diaria=random.randint(1, 7),
             )
             prescricao.save()
+            prescricao.medicamento = medicamento
             c.prescricoes.add(prescricao)
 
         # --------------------------------------------------
