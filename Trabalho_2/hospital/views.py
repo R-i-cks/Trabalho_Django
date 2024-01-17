@@ -102,16 +102,16 @@ class ListaConsultas(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     def get_queryset(self):
         return Consulta.objects.all()
 
-def add_consulta(request):
+def add_consulta(request,id):
     if request.method == 'POST':
         form = ConsultaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('hospital:auxiliar', id=1)
+            return redirect('hospital:auxiliar', id=id)
     else:
         form = ConsultaForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})
-def add_utente(request):
+def add_utente(request,id):
     if request.method == 'POST':
         form = UtenteForm(request.POST)
         if form.is_valid():
@@ -123,7 +123,7 @@ def add_utente(request):
             user =  User.objects.create_user(username=username,email=email, password=password)
             user.groups.add(grupo_utentes)
             user.save()
-            return redirect('hospital:auxiliar', id=1)
+            return redirect('hospital:auxiliar', id=id)
     else:
         form = UtenteForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})
@@ -142,7 +142,7 @@ class ListaUtentes(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     def get_queryset(self):
         return Utentes.objects.all()
 
-def add_medico(request):
+def add_medico(request,id):
     if request.method == 'POST':
         form = MedicoForm(request.POST)
         if form.is_valid():
@@ -155,11 +155,11 @@ def add_medico(request):
             user =  User.objects.create_user(username=username,email=email, password=password)
             user.groups.add(grupo_medicos, grupo_profissionais)
             user.save()
-            return redirect('hospital:auxiliar', id=1)
+            return redirect('hospital:auxiliar', id=id)
     else:
         form = MedicoForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})
-def add_enfermeiro(request):
+def add_enfermeiro(request,id):
     if request.method == 'POST':
         form = EnfermeiroForm(request.POST)
         if form.is_valid():
@@ -173,20 +173,20 @@ def add_enfermeiro(request):
             user.groups.add(grupo_enfermeiros, grupo_profissionais)
             user.save()
             form.save()
-            return redirect('hospital:auxiliar', id=1)
+            return redirect('hospital:auxiliar', id=id)
     else:
         form = EnfermeiroForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})
-def add_medicamento(request):
+def add_medicamento(request,id):
     if request.method == 'POST':
         form = MedicamentoForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('hospital:auxiliar', id=1)
+            return redirect('hospital:auxiliar', id=id)
     else:
         form = MedicamentoForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})
-def add_familiar(request):
+def add_familiar(request,id):
     if request.method == 'POST':
         form = FamiliarForm(request.POST)
         if form.is_valid():
@@ -198,7 +198,7 @@ def add_familiar(request):
             user.groups.add(grupo_familiares)
             form.save()
             user.save()
-            return redirect('hospital:auxiliar', id=1)
+            return redirect('hospital:auxiliar', id=id)
     else:
         form = FamiliarForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})
@@ -401,6 +401,13 @@ class AuxiliarView(LoginRequiredMixin, UserPassesTestMixin, generic.ListView):
     def get_queryset(self):
         return Consulta.objects.all()
 
+    def get_object(self, queryset=None):
+        return get_object_or_404(Auxiliar, id=self.kwargs["id"])
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        auxiliar = self.get_object()
+        context["auxiliar"] = auxiliar
+        return context
 
 class MedicamentoView(LoginRequiredMixin, generic.DetailView):
     model = Medicamento
