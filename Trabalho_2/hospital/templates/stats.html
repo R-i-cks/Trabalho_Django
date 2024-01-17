@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'hospital/stats.css' %}">
+    <title>Estatística</title>
+</head>
+<body>
+    <ul>
+        <li><a href="{% url 'hospital:user_login' %}">Hospital</a></li>
+    </ul>
+
+
+    <div class="content">
+        <h1>Estatísticas</h1>
+    </div>
+
+    <div class="grid-container">
+        <a class="grid-item">
+            <p  class="large-number">{{ total_users.count }}</p>
+            Utentes
+        </a>
+        <a class="grid-item">
+            <p  class="large-number">{{ n_homens.count }}</p>
+            Homens
+        </a>
+        <a class="grid-item">
+            <p  class="large-number">{{ n_mulheres.count }}</p>
+            Mulheres
+        </a>
+        <a class="grid-item">
+            <p  class="large-number">{{ medicamento_mais_p  }}</p>
+            Medicamento mais prescrito
+        </a>
+        <a class="grid-item">
+            <p  class="large-number">{{ medico_mais_p  }}</p>
+            Médico com mais prescrições
+        </a>
+        <a class="grid-item">
+            <p  class="large-number">{{ exame_mais_p }}</p>
+            Exame mais realizado
+        </a>
+    </div>
+
+
+    <div class="developer-section">
+        <p>Developed by Ricardo, Monica & Dinis</p>
+    </div>
+</body>
+</html>
