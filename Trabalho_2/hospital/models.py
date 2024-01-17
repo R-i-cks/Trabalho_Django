@@ -77,14 +77,23 @@ class Medicoes(models.Model):
     valor = models.FloatField(max_length=20, default="")
     unidades = models.CharField(max_length=10, default="")
 
+class MedicoesForm(forms.ModelForm):
+    class Meta:
+        model = Medicoes
+        fields = ["tipo","valor","unidades"]
 class Prescricoes(models.Model):
 
-    medicamento = models.ManyToManyField(Medicamento)
+    medicamento = models.ForeignKey(Medicamento, on_delete=models.CASCADE,null=True)
     utente = models.ForeignKey(Utente, on_delete=models.CASCADE)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
     inicio_toma = models.DateTimeField(null=True)
     validade_prescricao = models.IntegerField(default=0)
     dose_diaria = models.IntegerField(default=0)
+
+class PrescricoesForm(forms.ModelForm):
+    class Meta:
+        model = Prescricoes
+        fields = ["medicamento","inicio_toma","validade_prescricao", "dose_diaria"]
 
 class Exame(models.Model):
     utente = models.ForeignKey(Utente, on_delete=models.CASCADE)
@@ -94,6 +103,10 @@ class Exame(models.Model):
     nome_exame = models.CharField(max_length=40, default="")
     resultado = models.CharField(max_length=200, default="")
 
+class ExamesForm(forms.ModelForm):
+    class Meta:
+        model = Exame
+        fields = ["nome_exame","data_realizacao","resultado"]
 class Consulta(models.Model):
     utente = models.ForeignKey(Utente, on_delete=models.CASCADE)
     medico = models.ForeignKey(Medico, on_delete=models.CASCADE)
@@ -106,5 +119,5 @@ class Consulta(models.Model):
 class ConsultaForm(forms.ModelForm):
     class Meta:
         model = Consulta
-        fields = ['utente', 'medico', 'unidade_saude', 'data', 'medicoes', 'prescricoes', 'exames']
+        fields = ['utente', 'medico', 'unidade_saude', 'data']
 

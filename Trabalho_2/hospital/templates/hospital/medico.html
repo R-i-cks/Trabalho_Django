@@ -44,14 +44,15 @@
                         <p class="data-consulta">Data: {{ consulta.data }}</p>
                         <p class="prescription-heading">Prescrições:</p>
                             {% for prescricao in consulta.prescricoes.all %}
-                                {% for medicamento in prescricao.medicamento.all %}
                                     <ul class="prescription-list">
-                                        <li>Tomar {{ medicamento.nome }}, {{ prescricao.dose_diaria }} vezes ao dia |</li>
+                                        <li>Tomar {{ prescricao.medicamento.nome }}, {{ prescricao.dose_diaria }} vezes ao dia |</li>
                                         <li>Início da toma a: {{prescricao.inicio_toma}} |</li>
                                         <li>Válida durante {{ prescricao.validade_prescricao }} meses |</li>
                                     </ul>
-                                {% endfor %}
                             {% endfor %}
+                          <a href="{% url 'hospital:add_prescricao'  consulta_id=consulta.id medico_id=consulta.medico.id utente_id=consulta.utente.id%}">
+                            <button >Adicionar Prescricao </button>
+                        <a/>
                         <p class="measurements-heading">Medições:</p>
                         <div class="measurements-op">
                             {% for medicao in consulta.medicoes.all %}
@@ -59,6 +60,9 @@
                                     <li>{{ medicao.tipo }}: {{ medicao.valor }} {{ medicao.unidades }}</li>
                                 </ul>
                             {% endfor %}
+                            <a href="{% url 'hospital:add_medicao'  consulta_id=consulta.id medico_id=consulta.medico.id utente_id=consulta.utente.id%}">
+                            <button >Adicionar Medicao </button>
+                        <a/>
                         </div>
                         <p class="exams-heading">Exames:</p>
                             {% for exame in consulta.exames.all %}
@@ -68,6 +72,9 @@
                                     <li>Resultado: {{ exame.resultado }} |</li>
                                 </ul>
                             {% endfor %}
+                        <a href="{% url 'hospital:add_exame'  consulta_id=consulta.id medico_id=consulta.medico.id utente_id=consulta.utente.id%}">
+                            <button >Adicionar Exame </button>
+                        <a/>
                     </li>
                 {% endfor %}
             </ul>
