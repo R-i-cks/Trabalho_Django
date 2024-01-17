@@ -223,8 +223,13 @@ def add_prescricao(request,consulta_id, medico_id, utente_id):
     else:
         form = PrescricoesForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})
-def add_medicao(request,consulta_id, medico_id, utente_id):
-    medico = get_object_or_404(Medico, pk=medico_id)
+def add_medicao(request,consulta_id,prof,profissional_id, utente_id):
+
+    if prof=="medico":
+        profissional = get_object_or_404(Medico, pk=profissional_id)
+    else:
+        profissional = get_object_or_404(Enfermeiro, pk=profissional_id)
+
     utente = get_object_or_404(Utente, pk=utente_id)
     consulta = get_object_or_404(Consulta,pk=consulta_id)
 
@@ -233,17 +238,26 @@ def add_medicao(request,consulta_id, medico_id, utente_id):
         if form.is_valid():
             medicao = form.save(commit=False)
             medicao.utente = utente
-            medicao.medico = medico
+            if prof == "medico":
+                medicao.medico = profissional
+            else:
+                medicao.enfermeiro = profissional
             medicao.save()
             consulta.medicoes.add(medicao)
             consulta.save()
-            return redirect('hospital:medico',id=medico.id)
+            if prof == "medico":
+                return redirect('hospital:medico', id=profissional.id)
+            else:
+                return redirect('hospital:enfermeiro', id=profissional.id)
     else:
         form = MedicoesForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})
 
-def add_exame(request,consulta_id, medico_id, utente_id):
-    medico = get_object_or_404(Medico, pk=medico_id)
+def add_exame(request,consulta_id, prof, profissional_id, utente_id):
+    if prof=="medico":
+        profissional = get_object_or_404(Medico, pk=profissional_id)
+    else:
+        profissional = get_object_or_404(Enfermeiro, pk=profissional_id)
     utente = get_object_or_404(Utente, pk=utente_id)
     consulta = get_object_or_404(Consulta,pk=consulta_id)
 
@@ -252,11 +266,17 @@ def add_exame(request,consulta_id, medico_id, utente_id):
         if form.is_valid():
             exame = form.save(commit=False)
             exame.utente = utente
-            exame.medico = medico
+            if prof=="medico":
+                exame.medico = profissional
+            else:
+                exame.enfermeiro = profissional
             exame.save()
             consulta.exames.add(exame)
             consulta.save()
-            return redirect('hospital:medico',id=medico.id)
+            if prof=="medico":
+                return redirect('hospital:medico',id=profissional.id)
+            else:
+                return redirect('hospital:enfermeiro', id=profissional.id)
     else:
         form = ExamesForm()
     return render(request, 'hospital/add_consulta.html', {'form': form})

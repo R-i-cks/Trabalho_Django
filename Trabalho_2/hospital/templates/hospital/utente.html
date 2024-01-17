@@ -55,7 +55,7 @@
                                 </ul>
                             {% endfor %}
                         {% if user|is_enfermeiro%}
-                            <a href="{% url 'hospital:add_medicao'  consulta_id=consulta.id medico_id=consulta.medico.id utente_id=consulta.utente.id%}">
+                            <a href="{% url 'hospital:add_medicao'  consulta_id=consulta.id prof='enfermeiro' profissional_id=consulta.medico.id utente_id=consulta.utente.id%}">
                             <button >Adicionar Medicao </button>
                             <a/>
                         {% endif %}
@@ -67,6 +67,11 @@
                                     <li>Resultado: {{ exame.resultado }} |</li>
                                 </ul>
                             {% endfor %}
+                            {% if user|is_enfermeiro%}
+                                <a href="{% url 'hospital:add_exame'  consulta_id=consulta.id prof='enfermeiro' profissional_id=consulta.medico.id utente_id=consulta.utente.id%}">
+                                <button >Adicionar Medicao </button>
+                                <a/>
+                            {% endif %}
 
                     </li>
                 {% endfor %}
